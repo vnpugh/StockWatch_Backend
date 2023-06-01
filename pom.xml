@@ -15,102 +15,37 @@
 	<description>SEI Capstone Project</description>
 	<properties>
 		<java.version>17</java.version>
-		<cucumber.version>6.8.1</cucumber.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-java</artifactId>
-			<version>${cucumber.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-junit</artifactId>
-			<version>${cucumber.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-spring</artifactId>
-			<version>${cucumber.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.rest-assured</groupId>
-			<artifactId>rest-assured</artifactId>
-			<version>4.3.0</version>
-			<scope>test</scope>
-		</dependency>
-
-
-		<!-- POSTGRES DEPENDENCY, connects PostGres to our Java Application  -->
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<!-- GETS YOUR JPA,  -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<version>2.7.8</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api -->
 		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-api</artifactId>
-			<version>0.11.5</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl -->
 		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-impl</artifactId>
-			<version>0.11.5</version>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson -->
 		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-jackson</artifactId>
-			<version>0.11.5</version>
-			<scope>runtime</scope>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>2.1.214</version>
 		</dependency>
 	</dependencies>
 
