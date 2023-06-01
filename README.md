@@ -1,1 +1,1 @@
-# StockWatch-Backend-
+# StockWatch (Backend API)
