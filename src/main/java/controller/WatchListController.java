@@ -30,11 +30,11 @@ public class WatchListController {
      * Retrieves (view) all stocks on the user's watchlist.
      * @return a list of stocks on the watchlist
      */
-    @GetMapping(path = "/watchlist")
-    public List<Stock> getAllStocksOnWatchList(){
-        User user = getLoggedInUser();
-        return watchListService.getAllStocksOnWatchList(user);
-    }
+//    @GetMapping(path = "/watchlist")
+//    public List<Stock> getAllStocksOnWatchList(){
+//        User user = getLoggedInUser();
+//        return watchListService.getAllStocksOnWatchList(user);
+//    }
 
 
 
@@ -61,12 +61,12 @@ public class WatchListController {
      * @param symbol the ticker symbol of the stock to add
      * @return the updated watchlist of the user
      */
-    @PostMapping(path = "/watchlist/stocks/{symbol}")
-    public List<WatchList> addStockToWatchList(@PathVariable String symbol) {
-        User user = getLoggedInUser();
-        Stock stock = watchListService.addStockToWatchlist(user, symbol);
-        return user.getWatchList();
-    }
+//    @PostMapping(path = "/watchlist/stocks/{symbol}")
+//    public List<WatchList> addStockToWatchList(@PathVariable String symbol) {
+//        User user = getLoggedInUser();
+//        Stock stock = watchListService.addStockToWatchlist(user, symbol);
+//        return user.getWatchList();
+//    }
     private User getLoggedInUser() { // method to get the logged-in user (dummy user)
         User user = new User();
         user.setEmail("email100@gmail.com");
@@ -82,19 +82,19 @@ public class WatchListController {
      * @return ResponseEntity<WatchList> The updated watchlist with HTTP status 200 (OK).
      *         If the watchlist is not found, returns HTTP status 404 (Not Found).
      */
-    @PutMapping(path = "/watchlist/{watchListId}")
-        public ResponseEntity<WatchList> updateWatchListName(@PathVariable Long watchListId, Long newListName) {
-            User user = getLoggedInUser();
-            WatchList watchList = user.findWatchListByWatchListId(watchListId);
-
-            if (watchList != null) {
-                watchList.setListName();updateWatchListName(newListName, newListName);
-                userRepository.save(user);   // Save the user to the updated watchlist
-                return ResponseEntity.ok(watchList);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-    }
+//    @PutMapping(path = "/watchlist/{watchListId}")
+//        public ResponseEntity<WatchList> updateWatchListName(@PathVariable Long watchListId, Long newListName) {
+//            User user = getLoggedInUser();
+//            WatchList watchList = user.findWatchListByWatchListId(watchListId);
+//
+//            if (watchList != null) {
+//                watchList.setListName();updateWatchListName(newListName, newListName);
+//                userRepository.save(user);   // Save the user to the updated watchlist
+//                return ResponseEntity.ok(watchList);
+//            } else {
+//                return ResponseEntity.notFound().build();
+//            }
+//    }
 
 
 

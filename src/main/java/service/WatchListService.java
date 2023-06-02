@@ -30,21 +30,21 @@ public class WatchListService {
 
 
 
-    public Stock addStockToWatchlist(User user, String symbol) {
-        Stock stock = stockService.getStockBySymbol(symbol);
+//    public Stock addStockToWatchlist(User user, String symbol) {
+//        Stock stock = stockService.getStockBySymbol(symbol);
+//
+//        if (stock != null) {
+//            user.getWatchList().addStock(stock);
+//            return stock;
+//        } else {
+//            throw new StockNotFoundException("Stock not found for symbol: " + symbol);
+//        }
+//    }
 
-        if (stock != null) {
-            user.getWatchList().addStock(stock);
-            return stock;
-        } else {
-            throw new StockNotFoundException("Stock not found for symbol: " + symbol);
-        }
-    }
 
 
-
-    public List<Stock> getAllStocksOnWatchList(User user) {
-    }
+//    public List<Stock> getAllStocksOnWatchList(User user) {
+//    }
 
     public void deleteStock(User user, String symbol) {
     }

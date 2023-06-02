@@ -5,6 +5,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.List;
 
 @Entity
@@ -13,7 +15,7 @@ public class Stock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "stock_id")
-    private Long stockId;
+    private Integer stockId;
 
     @Column
     private String company;
@@ -28,7 +30,10 @@ public class Stock {
     private Double stockChange;
 
     @Column
-    private Double stockGain;
+    private Double wallStreetRating;
+
+    @Column
+    private BigDecimal marketCap;
 
     //Multiple stocks can belong to Many watchlists
     @ManyToMany
@@ -44,14 +49,29 @@ public class Stock {
     public Stock() {
     }
 
-    public Stock(String company, String symbol,
-                 Double price, Double stockChange, Double stockGain) {
-
+    public Stock(Integer stockId, String company, String symbol, Double price,
+                 Double stockChange, Double wallStreetRating, BigDecimal marketCap)
+     {
+        this.stockId = stockId;
         this.company = company;
         this.symbol = symbol;
         this.price = price;
         this.stockChange = stockChange;
-        this.stockGain = stockGain;
+        this.wallStreetRating = wallStreetRating;
+        this.marketCap = marketCap;
+    }
+
+
+
+
+
+
+    public Integer getStockId() {
+        return stockId;
+    }
+
+    public void setStockId(Integer stockId) {
+        this.stockId = stockId;
     }
 
     public String getCompany() {
@@ -86,24 +106,37 @@ public class Stock {
         this.stockChange = stockChange;
     }
 
-    public Double getStockGain() {
-        return stockGain;
+    public Double getWallStreetRating() {
+        return wallStreetRating;
     }
 
-    public void setStockGain(Double stockGain) {
-        this.stockGain = stockGain;
+    public void setWallStreetRating(Double wallStreetRating) {
+        this.wallStreetRating = wallStreetRating;
     }
+
+    public BigDecimal getMarketCap() {
+        return marketCap;
+    }
+
+    public void setMarketCap(BigDecimal marketCap) {
+        this.marketCap = marketCap;
+    }
+
 
     @Override
     public String toString() {
+        NumberFormat percentFormat = NumberFormat.getPercentInstance();
+        percentFormat.setMaximumFractionDigits(2);
         return "Stock{" +
                 "stockId=" + stockId +
                 ", company='" + company + '\'' +
                 ", symbol='" + symbol + '\'' +
                 ", price=" + price +
-                ", stockChange=" + stockChange +
-                ", stockGain=" + stockGain +
+                ", stockChange=" + percentFormat.format(stockChange) +
+                ", wallStreetRating=" + wallStreetRating +
+                ", marketCap=" + marketCap +
                 ", watchList=" + watchList +
+                ", industry=" + industry +
                 '}';
     }
 }

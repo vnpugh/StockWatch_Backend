@@ -99,6 +99,6 @@ public class User {
     public void addWatchList(WatchList watchList) {
     }
 
-    public WatchList findWatchListByWatchListId(Long watchListId) {
-    }
+//    public WatchList findWatchListByWatchListId(Long watchListId) {
+//    }
 }

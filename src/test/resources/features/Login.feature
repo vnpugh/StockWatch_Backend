@@ -1,9 +1,9 @@
-#
-#
-#Feature: User Can Successfully Login
-#
-#  Scenario: Successful User Login
-#    Given a registered user
+
+
+Feature: User Can Successfully Login
+
+  Scenario: Successful User Login
+    Given a registered user
 #    When I enter my valid username and password
 #    Then I should be logged in successfully
 
