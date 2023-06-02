@@ -25,7 +25,7 @@ public class User {
     private String firstName;
 
     @Column(unique = true)
-    private String email;
+    private String email; //username
 
     @Column
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -94,5 +94,11 @@ public class User {
                 ", password='" + password + '\'' +
                 ", watchList=" + watchList +
                 '}';
+    }
+
+    public void addWatchList(WatchList watchList) {
+    }
+
+    public WatchList findWatchListByWatchListId(Long watchListId) {
     }
 }

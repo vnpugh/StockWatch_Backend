@@ -51,7 +51,7 @@ public class WatchList {
         return listName;
     }
 
-    public void setListName(String listName) {
+    public void setListName() {
         this.listName = listName;
     }
 
@@ -89,4 +89,6 @@ public class WatchList {
                 ", user=" + user +
                 '}';
     }
+
+
 }

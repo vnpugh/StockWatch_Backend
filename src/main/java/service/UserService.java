@@ -15,40 +15,40 @@ public class UserService {
 
     private UserRepository userRepository;
 
-    private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public UserService(UserRepository userRepository,
-                       @Lazy PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-
-    }
-
-    /**
-     * Creates a new user.
-     * @param userObject The User object containing the details of the user to be created.
-     * @return The created User object.
-     * @throws InformationExistException if a user with the same email address already exists.
-     */
-    public User createUser(User userObject) throws InformationExistException {
-        if (!userRepository.existsByEmailAddress(userObject.getEmailAddress())) {
-            userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
-            return userRepository.save(userObject);
-        } else {
-            throw new InformationExistException("User with email address " + userObject.getEmailAddress() +
-                    " already exists.");
-        }
-    }
-
-    /**
-     * Finds a user by their email.
-     * @param email the email of the user to find
-     * @return the User object corresponding to the provided email
-     */
-    public User findUserByEmail(String email){
-        return userRepository.findUserByEmail(email);
-    }
+//    private final PasswordEncoder passwordEncoder;
+//
+//    @Autowired
+//    public UserService(UserRepository userRepository,
+//                       @Lazy PasswordEncoder passwordEncoder) {
+//        this.userRepository = userRepository;
+//        this.passwordEncoder = passwordEncoder;
+//
+//    }
+//
+//    /**
+//     * Creates a new user.
+//     * @param userObject The User object containing the details of the user to be created.
+//     * @return The created User object.
+//     * @throws InformationExistException if a user with the same email address already exists.
+//     */
+//    public User createUser(User userObject) throws InformationExistException {
+//        if (!userRepository.existsByEmailAddress(userObject.getEmailAddress())) {
+//            userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
+//            return userRepository.save(userObject);
+//        } else {
+//            throw new InformationExistException("User with email address " + userObject.getEmailAddress() +
+//                    " already exists.");
+//        }
+//    }
+//
+//    /**
+//     * Finds a user by their email.
+//     * @param email the email of the user to find
+//     * @return the User object corresponding to the provided email
+//     */
+//    public User findUserByEmail(String email){
+//        return userRepository.findUserByEmail(email);
+//    }
 
 
 

@@ -18,17 +18,17 @@ import static io.restassured.RestAssured.port;
 public class LoginTestDefinitions {
 
 
-    private static final String BASE_URL = ;
-
-    @Given("a registered user")
-    public void aRegisteredUser() throws JSONException {
-        RequestSpecification request = RestAssured.given();
-        JSONObject requestBody = new JSONObject();
-        requestBody.put("email", "email100@gmail.com");
-        requestBody.put("password", "password100");
-        request.header("Content-Type", "application/json");
-        response = request.body(requestBody.toString()).post(BASE_URL + port +"/api/users/register");
-    }
+//    private static final String BASE_URL = ;
+//
+//    @Given("a registered user")
+//    public void aRegisteredUser() throws JSONException {
+//        RequestSpecification request = RestAssured.given();
+//        JSONObject requestBody = new JSONObject();
+//        requestBody.put("email", "email100@gmail.com");
+//        requestBody.put("password", "password100");
+//        request.header("Content-Type", "application/json");
+//        response = request.body(requestBody.toString()).post(BASE_URL + port +"/api/users/register");
+//    }
 
 
 
