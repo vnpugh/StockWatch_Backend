@@ -1,22 +1,36 @@
 package service;
 
+import data.StocksDataLoader;
 import exceptions.StockNotFoundException;
-import io.cucumber.java.eo.Se;
 import models.Stock;
 import models.User;
 import models.WatchList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import repository.StockRepository;
 import repository.UserRepository;
 import repository.WatchListRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class WatchListService {
     private UserRepository userRepository;
+
+    @Autowired
+    private StockRepository stockRepository;
+
+    @Autowired
     private WatchListRepository watchListRepository;
-    private Object stockService;
+
+    @Autowired
+    private StockService stockService;
+
+    @Autowired
+    private StocksDataLoader stocksDataLoader;
+    private User user;
+
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -30,22 +44,34 @@ public class WatchListService {
 
 
 
-//    public Stock addStockToWatchlist(User user, String symbol) {
-//        Stock stock = stockService.getStockBySymbol(symbol);
-//
-//        if (stock != null) {
-//            user.getWatchList().addStock(stock);
-//            return stock;
-//        } else {
-//            throw new StockNotFoundException("Stock not found for symbol: " + symbol);
-//        }
-//    }
+    public Stock addStockToWatchlist(String symbol) {
+        Stock stock = stockService.getStockBySymbol(symbol);
+
+        if (stock != null) {
+            List<WatchList> watchlist = user.getWatchList();
+            watchlist.add(stock);
+            return stock;
+        } else {
+            throw new StockNotFoundException("Stock not found for symbol: " + symbol);
+        }   }
 
 
+    public List<Stock> getAllStocksOnWatchList(User user) {
+        List<WatchList> watchlist = user.getWatchList();
+        List<Stock> stocks = new ArrayList<>();
 
-//    public List<Stock> getAllStocksOnWatchList(User user) {
-//    }
+        for (WatchList watchList : watchlist) {
+            stocks.addAll(watchList.getStocks());
+        }
+
+        return stocks;
+    }
+
+
 
     public void deleteStock(User user, String symbol) {
     }
+
+
+
 }

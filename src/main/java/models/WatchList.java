@@ -5,10 +5,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name="watchlist")
 public class WatchList {
+
+
 
     @Column
     @Id
@@ -29,14 +34,25 @@ public class WatchList {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public WatchList() {
-    }
+    @OneToMany
+    private List<Stock> stocks;
+
 
     public WatchList(Long watchListId, String listName, LocalDate dateCreated, Long description) {
         this.watchListId = watchListId;
         this.listName = listName;
         this.dateCreated = dateCreated;
         this.description = description;
+    }
+
+
+    public WatchList() {
+        this.stocks = new ArrayList<>();
+    }
+
+
+    public List<Stock> getStocks() {
+        return stocks;
     }
 
     public Long getWatchListId() {
@@ -90,5 +106,10 @@ public class WatchList {
                 '}';
     }
 
+
+
+
+    public void add(WatchList watchList) {
+    }
 
 }

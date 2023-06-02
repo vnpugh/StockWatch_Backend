@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Long> {
     Stock save(Stock stock);
+
+    Stock findStockBySymbol(String symbol);
 }

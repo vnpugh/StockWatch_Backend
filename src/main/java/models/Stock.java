@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name="stocks")
-public class Stock {
+public class Stock extends WatchList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "stock_id")
@@ -60,10 +60,6 @@ public class Stock {
         this.wallStreetRating = wallStreetRating;
         this.marketCap = marketCap;
     }
-
-
-
-
 
 
     public Integer getStockId() {
