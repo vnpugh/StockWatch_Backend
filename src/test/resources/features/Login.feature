@@ -3,8 +3,8 @@
 Feature: User Can Successfully Login
 
   Scenario: Successful User Login
-     Given a registered user
-     When I enter my valid username and password
+    Given a registered user
+    When I enter my valid email and password
 #    Then I should be logged in successfully
 
 #  Scenario: User Login with Invalid Username
@@ -41,7 +41,3 @@ Feature: User Can Successfully Login
 #    Given a registered user with an expired password
 #    When I enter valid username and expired password
 #    Then I should be prompted to change my password
-
-
-
-

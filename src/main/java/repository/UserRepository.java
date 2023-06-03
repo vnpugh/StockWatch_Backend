@@ -1,11 +1,20 @@
 package repository;
 
+
 import models.User;
 
+import java.util.Optional;
+
 public interface UserRepository {
+    User save(User user);
+
     boolean existsByEmailAddress(String email);
 
-    User save(User userObject);
-
     User findUserByEmail(String email);
+
+    boolean existsByEmail(String email);
+
+    Optional<User> findCurrentLoggedInUserById(Long id);
+
+    void delete(User user);
 }

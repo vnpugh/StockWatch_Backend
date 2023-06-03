@@ -1,6 +1,7 @@
 package service;
 
 import exceptions.InformationExistException;
+import exceptions.InformationNotFoundException;
 import models.User;
 import models.request.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import repository.UserRepository;
 
+import java.util.Optional;
 
 
 @Service
@@ -54,30 +56,50 @@ public class UserService {
     }
 
 
-    public User registerUser(User userObject) {
-    }
 
     public ResponseEntity<?> loginUser(LoginRequest loginRequest) {
-            String email = loginRequest.getEmail();
-            String password = loginRequest.getPassword();
+        String email = loginRequest.getEmail();
+        String password = loginRequest.getPassword();
 
-            // Validate the username and password
-            if (email.equals("email100@gmail.com") && password.equals("password100")) {
-                // Successful login
-                return ResponseEntity.ok("Login successful");
-            } else {
-                // Failed login
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
-            }
+        // Validate the username and password
+        if (email.equals("email100@gmail.com") && password.equals("password100")) {
+            // Successful login
+            return ResponseEntity.ok("Login successful");
+        } else {
+            // Failed login
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
-
-    
-    public User getCurrentUser() {
     }
 
-    public User updateCurrentUser(User userObject) {
+
+    public User registerUser(User userObject) {
+        if (!userRepository.existsByEmail(userObject.getEmail())) {
+            String encodedPassword = passwordEncoder.encode(userObject.getPassword());
+            userObject.setPassword(encodedPassword);
+            User registeredUser = userRepository.save(userObject);
+            return registeredUser;
+        } else {
+            throw new RuntimeException("User with the given email already exists");
+        }
+    }
+
+    public User getCurrentLoggedInUser(){
+        Optional<User> user = userRepository.findCurrentLoggedInUserById(getCurrentLoggedInUser().getId());
+        if (user.isPresent()) {
+            return user.get();
+        } else throw new InformationNotFoundException("User with Id " + getCurrentLoggedInUser().getId() + " does not exist.");
+    }
+
+    public User updateCurrentUser(User userObject) throws InformationNotFoundException{
+        User updatedUser = getCurrentLoggedInUser();
+        updatedUser.setEmail(getCurrentLoggedInUser().getEmail());
+        updatedUser.setPassword(getCurrentLoggedInUser().getPassword());
+        return userRepository.save(updatedUser);
     }
 
     public ResponseEntity<?> deleteCurrentUser() {
+        User user = getCurrentLoggedInUser();
+        userRepository.delete(user);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

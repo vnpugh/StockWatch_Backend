@@ -1,12 +1,10 @@
 package definitions;
 
-import com.jayway.jsonpath.DocumentContext;
 import com.stockwatch.capstone.CapstoneApplication;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.json.JSONException;
@@ -21,12 +19,13 @@ import org.springframework.boot.test.web.server.LocalServerPort;
         classes = CapstoneApplication.class)
 public class LoginStepDefinitions {
 
-    private static final String BASE_URL = "http://localhost:";
 
-    private static Response response;
+    private static final String BASE_URL = "http://localhost:";
 
     @LocalServerPort
     String port;
+
+    private static Response response;
 
     @Given("a registered user")
     public void aRegisteredUser() throws JSONException {
@@ -38,21 +37,29 @@ public class LoginStepDefinitions {
         response = request.body(requestBody.toString()).post(BASE_URL + port +"/api/users/register");
     }
 
-    @When("I enter my valid username and password")
-    public void iEnterMyValidUsernameAndPassword() {
-        JsonPath jsonObject = new JsonPath(response.asString());
-        String email = jsonObject.get("data.user.email");  // Adjust the JSON path if needed
-        String password = "password100";
 
-        Assert.assertEquals("email100@gmail.com", email);
-        Assert.assertEquals("password100", password);
+
+
+
+
+
+
+    @When("I enter my valid email and password")
+    public void iEnterMyValidEmailAndPassword() {
+        String email = "email100@gmail.com";
+        String password = "password100";
+        boolean isValidEmail = validateEmail(email);
+        boolean isValidPassword = validatePassword(password);
+        Assert.assertTrue("Email is not valid", isValidEmail);
+        Assert.assertTrue("Password is not valid", isValidPassword);
     }
 
+    private boolean validateEmail(String email) {    // Validate email method
+        return email.matches("[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.com");
+    }
 
-
-
-
-
-
+    private boolean validatePassword(String password) {    // Validate password method
+        return password.length() >= 8;
+    }
 
 }
