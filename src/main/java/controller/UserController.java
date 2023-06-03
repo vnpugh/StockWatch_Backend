@@ -54,7 +54,7 @@ public class UserController {
      */
     @GetMapping(path = "/users")
     public User getUser() {
-        return userService.getCurrentUser();
+        return userService.getCurrentLoggedInUser();
     }
 
 

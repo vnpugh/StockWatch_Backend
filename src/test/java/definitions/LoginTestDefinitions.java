@@ -2,16 +2,16 @@ package definitions;
 
 import com.stockwatch.capstone.CapstoneApplication;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Assert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-
-import static io.restassured.RestAssured.port;
 
 
 @CucumberContextConfiguration
@@ -37,6 +37,30 @@ public class LoginTestDefinitions {
         response = request.body(requestBody.toString()).post(BASE_URL + port +"/api/users/register");
     }
 
+
+
+
+
+
+
+
+    @When("I enter my valid email and password")
+    public void iEnterMyValidEmailAndPassword() {
+        String email = "email100@gmail.com";
+        String password = "password100";
+        boolean isValidEmail = validateEmail(email);
+        boolean isValidPassword = validatePassword(password);
+        Assert.assertTrue("Email is not valid", isValidEmail);
+        Assert.assertTrue("Password is not valid", isValidPassword);
+    }
+
+    private boolean validateEmail(String email) {    // Validate email method
+        return email.matches("[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.com");
+    }
+
+    private boolean validatePassword(String password) {    // Validate password method
+        return password.length() >= 8;
+    }
 
 }
 

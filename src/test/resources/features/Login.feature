@@ -4,7 +4,7 @@ Feature: User Can Successfully Login
 
   Scenario: Successful User Login
     Given a registered user
-#    When I enter my valid username and password
+    When I enter my valid email and password
 #    Then I should be logged in successfully
 
 #  Scenario: User Login with Invalid Username

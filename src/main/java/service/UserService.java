@@ -83,16 +83,23 @@ public class UserService {
         }
     }
 
-    public User getCurrentUser(){
-        Optional<User> user = userRepository.findById(getCurrentLoggedInUser().getId());
+    public User getCurrentLoggedInUser(){
+        Optional<User> user = userRepository.findCurrentLoggedInUserById(getCurrentLoggedInUser().getId());
         if (user.isPresent()) {
             return user.get();
         } else throw new InformationNotFoundException("User with Id " + getCurrentLoggedInUser().getId() + " does not exist.");
     }
 
-    public User updateCurrentUser(User userObject) {
+    public User updateCurrentUser(User userObject) throws InformationNotFoundException{
+        User updatedUser = getCurrentLoggedInUser();
+        updatedUser.setEmail(getCurrentLoggedInUser().getEmail());
+        updatedUser.setPassword(getCurrentLoggedInUser().getPassword());
+        return userRepository.save(updatedUser);
     }
 
     public ResponseEntity<?> deleteCurrentUser() {
+        User user = getCurrentLoggedInUser();
+        userRepository.delete(user);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
