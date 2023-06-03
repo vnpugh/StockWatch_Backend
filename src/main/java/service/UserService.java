@@ -4,9 +4,10 @@ import exceptions.InformationExistException;
 import models.User;
 import models.request.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import repository.UserRepository;
 
@@ -57,8 +58,20 @@ public class UserService {
     }
 
     public ResponseEntity<?> loginUser(LoginRequest loginRequest) {
-    }
+            String email = loginRequest.getEmail();
+            String password = loginRequest.getPassword();
 
+            // Validate the username and password
+            if (email.equals("email100@gmail.com") && password.equals("password100")) {
+                // Successful login
+                return ResponseEntity.ok("Login successful");
+            } else {
+                // Failed login
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+            }
+        }
+
+    
     public User getCurrentUser() {
     }
 
