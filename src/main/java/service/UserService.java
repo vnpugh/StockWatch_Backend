@@ -1,6 +1,7 @@
 package service;
 
 import exceptions.InformationExistException;
+import exceptions.InformationNotFoundException;
 import models.User;
 import models.request.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import repository.UserRepository;
 
+import java.util.Optional;
 
 
 @Service
@@ -54,8 +56,6 @@ public class UserService {
     }
 
 
-    public User registerUser(User userObject) {
-    }
 
     public ResponseEntity<?> loginUser(LoginRequest loginRequest) {
             String email = loginRequest.getEmail();
@@ -72,7 +72,22 @@ public class UserService {
         }
 
 
-    public User getCurrentUser() {
+    public User registerUser(User userObject) {
+        if (!userRepository.existsByEmail(userObject.getEmail())) {
+            String encodedPassword = passwordEncoder.encode(userObject.getPassword());
+            userObject.setPassword(encodedPassword);
+            User registeredUser = userRepository.save(userObject);
+            return registeredUser;
+        } else {
+            throw new RuntimeException("User with the given email already exists");
+        }
+    }
+
+    public User getCurrentUser(){
+        Optional<User> user = userRepository.findById(getCurrentLoggedInUser().getId());
+        if (user.isPresent()) {
+            return user.get();
+        } else throw new InformationNotFoundException("User with Id " + getCurrentLoggedInUser().getId() + " does not exist.");
     }
 
     public User updateCurrentUser(User userObject) {

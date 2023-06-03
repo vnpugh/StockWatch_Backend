@@ -3,5 +3,11 @@ package repository;
 import models.User;
 
 public interface UserRepository {
-    void save(User user);
+    User save(User user);
+
+    boolean existsByEmailAddress(String email);
+
+    User findUserByEmail(String email);
+
+    boolean existsByEmail(String email);
 }
