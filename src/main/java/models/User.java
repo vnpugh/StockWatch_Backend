@@ -6,12 +6,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-
 import java.util.List;
-
-
-import javax.persistence.Column;
-import javax.persistence.OneToMany;
 
 
 @Entity
@@ -39,12 +34,15 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String email, String password, List<WatchList> watchList) {
+    public User(String firstName, String email, String password) {
         this.firstName = firstName;
         this.email = email;
         this.password = password;
-        this.watchList = watchList;
+
     }
+
+
+
 
     public Long getId() {
         return id;
@@ -85,6 +83,8 @@ public class User {
     public void setWatchList(List<WatchList> watchList) {
         this.watchList = watchList;
     }
+
+
 
     @Override
     public String toString() {

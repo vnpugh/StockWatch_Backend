@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -27,7 +26,7 @@ public class WatchList {
     private LocalDate dateCreated;
 
     @Column
-    private Long description;
+    private String description;
 
     @ManyToOne
     @JsonIgnore
@@ -38,7 +37,7 @@ public class WatchList {
     private List<Stock> stocks;
 
 
-    public WatchList(Long watchListId, String listName, LocalDate dateCreated, Long description) {
+    public WatchList(Long watchListId, String listName, LocalDate dateCreated, String description) {
         this.watchListId = watchListId;
         this.listName = listName;
         this.dateCreated = dateCreated;
@@ -49,6 +48,7 @@ public class WatchList {
     public WatchList() {
         this.stocks = new ArrayList<>();
     }
+
 
 
     public List<Stock> getStocks() {
@@ -79,11 +79,11 @@ public class WatchList {
         this.dateCreated = dateCreated;
     }
 
-    public Long getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(Long description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 

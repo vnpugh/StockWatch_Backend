@@ -32,7 +32,6 @@ public class StocksDataLoader implements CommandLineRunner {
     public void setWatchListRepository(WatchListRepository watchListRepository) {
         this.watchListRepository = watchListRepository;
     }
-
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -82,7 +81,14 @@ public class StocksDataLoader implements CommandLineRunner {
         Stock stock10 = new Stock(110, "Facebook Inc.", "FB", 330.0, 3.9, 4.3, marketCap10);
         stockRepository.save(stock10);
 
-//        User user = new User("Jane", "email@gmail.com", "password100");
+
+
+        User user = new User("Jane", "email100@gmail.com", "password100");
+        userRepository.save(user);
+
+
+
+
 
 
 

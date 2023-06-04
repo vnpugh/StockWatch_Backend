@@ -3,13 +3,17 @@ package controller;
 import models.User;
 import models.request.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import repository.UserRepository;
 import service.UserService;
 @RestController
 @RequestMapping(path = "/api")
 public class UserController {
     private UserService userService;
+
+    private UserRepository userRepository;
 
 
     /**
@@ -28,7 +32,7 @@ public class UserController {
      * @param userObject The User object containing the details of the user to be registered.
      * @return The registered User object.
      */
-    @PostMapping(path = "/users/register")
+    @PostMapping(path = "/auth/users/register")
     public User registerUser(@RequestBody User userObject) {
         return userService.registerUser(userObject);
     }
@@ -41,10 +45,37 @@ public class UserController {
      * @param loginRequest The login request object containing user credentials.
      * @return A ResponseEntity representing the HTTP response with the result of the login operation.
      */
-    @PostMapping(path="/users/login")
+    @PostMapping(path="/auth/users/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest){
-        return userService.loginUser(loginRequest);
+        String email = loginRequest.getEmail();
+        String password = loginRequest.getPassword();
+
+        // Check if the provided credentials are valid
+        if (isValidCredentials(email, password)) {
+            // Successful login
+            return ResponseEntity.ok().build();
+        } else {
+            // Invalid credentials, return a 401 Unauthorized status code
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
+
+//    private boolean isValidCredentials(String email, String password) {
+//        // Add your logic to validate the credentials against the user database or any other authentication mechanism
+//        // Return true if the credentials are valid, false otherwise
+//        return email.equals("email100@gmail.com") && password.equals("password100");
+//    }
+    private boolean isValidCredentials(String email, String password) {
+        User user = userRepository.findUserByEmail(email);
+        if (user != null && user.getPassword().equals(password)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
 
 
     /**
