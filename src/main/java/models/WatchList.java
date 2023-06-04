@@ -1,8 +1,6 @@
 package models;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,13 +26,20 @@ public class WatchList {
     @Column
     private String description;
 
-    @ManyToOne
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(name = "watchlist_stocks",
+            joinColumns = @JoinColumn(name = "watchlist_id"),
+            inverseJoinColumns = @JoinColumn(name = "stock_id"))
     private List<Stock> stocks;
+
+
+
+//    @OneToMany
+//    private List<Stock> stocks;
 
 
     public WatchList(Long watchListId, String listName, LocalDate dateCreated, String description) {

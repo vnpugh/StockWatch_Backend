@@ -69,8 +69,12 @@ public class WatchListService {
 
 
 
-    public void deleteStock(User user, String symbol) {
+    public void deleteStock(User user, String symbol) {//deletes stock from user watchlist
+        List<WatchList> watchList = user.getWatchList();
+        watchList.removeIf(stock -> stock instanceof Stock && ((Stock) stock).getSymbol().equals(symbol));
     }
+
+
 
 
 

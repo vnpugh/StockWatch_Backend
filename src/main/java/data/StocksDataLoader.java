@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import repository.StockRepository;
 import repository.UserRepository;
 import repository.WatchListRepository;
+import service.StockService;
 import service.UserService;
 
 import java.math.BigDecimal;
@@ -21,12 +22,17 @@ public class StocksDataLoader implements CommandLineRunner {
     LocalDate currentDate = localDate.now();
 
     private StockRepository stockRepository;
+    private StockService stockService;
     private UserRepository userRepository;
     private WatchListRepository watchListRepository;
 
     @Autowired
     private UserService userService;
 
+    @Autowired
+    public void setStockService(StockService stockService) {
+        this.stockService = stockService;
+    }
 
     @Autowired
     public void setWatchListRepository(WatchListRepository watchListRepository) {

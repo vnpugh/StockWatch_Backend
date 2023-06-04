@@ -25,6 +25,8 @@ public class WatchListController {
     }
 
 
+
+    //**User can view all stocks on their watch list.
     /**
      * GET: endpoint http://localhost:8080/api/watchlist
      * Retrieves (view) all stocks on the user's watchlist.
@@ -38,12 +40,13 @@ public class WatchListController {
 
 
 
-    /**
-     *  POST: endpoint http://localhost:8080/api/watchlist
-     *  Create a new watchlist for the logged-in user.
-     *  The new watchlist is saved for the user (User Repository)
-     * @return ResponseEntity<WatchList> The created watchlist with HTTP status 201 (Created).
-     */
+    //**User can create a custom watch list.
+            /**
+             *  POST: endpoint http://localhost:8080/api/watchlist
+             *  Create a new watchlist for the logged-in user.
+             *  The new watchlist is saved for the user (User Repository)
+             * @return ResponseEntity<WatchList> The created watchlist with HTTP status 201 (Created).
+             */
     @PostMapping(path = "/watchlist")
     public ResponseEntity<WatchList> createWatchList() {
         User user = getLoggedInUser();
@@ -54,7 +57,7 @@ public class WatchListController {
     }
 
 
-
+//**User can add a stock to their watch list by ticker symbol.
     /**
      * POST: endpoint http://localhost:8080/api/watchlist/stocks/{symbol}
      * Adds a stock to the user's watchlist by the specified symbol.
@@ -67,9 +70,6 @@ public class WatchListController {
         Stock stock = watchListService.addStockToWatchlist(symbol);
         return user.getWatchList();
     }
-
-
-
     private User getLoggedInUser() { // method to get the logged-in user (dummy user)
         User user = new User();
         user.setEmail("email100@gmail.com");
@@ -77,6 +77,8 @@ public class WatchListController {
     }
 
 
+
+    //**User can update the name of a watch list.
     /**
      * PUT: endpoint http://localhost:8080/api/watchlist/{watchListId}
      * Update the name of a watchlist for the logged-in user.
@@ -101,7 +103,7 @@ public class WatchListController {
 
 
 
-
+//**User can delete a stock from their watch list.
     /**
      * Delete a stock from the user's watchlist by symbol.
      * @param symbol The symbol of the stock to delete.
