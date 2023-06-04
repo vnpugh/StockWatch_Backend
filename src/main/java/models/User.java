@@ -116,5 +116,6 @@ public class User {
     }
 
 
-
+    public void setWatchLists(List<WatchList> watchLists) {
+    }
 }

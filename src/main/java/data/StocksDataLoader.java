@@ -3,6 +3,7 @@ package data;
 
 import models.Stock;
 import models.User;
+import models.WatchList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,8 @@ import service.UserService;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collections;
 
 @Component
 public class StocksDataLoader implements CommandLineRunner {
@@ -90,6 +93,10 @@ public class StocksDataLoader implements CommandLineRunner {
 
 
         User user = new User("Jane", "email100@gmail.com", "password100");
+        WatchList watchList = new WatchList();
+        watchList.setUser(user);
+        watchList.setStocks(Arrays.asList(stock1, stock2, stock3)); // Add desired stocks to the watchlist
+        user.setWatchLists(Collections.singletonList(watchList));
         userRepository.save(user);
 
 

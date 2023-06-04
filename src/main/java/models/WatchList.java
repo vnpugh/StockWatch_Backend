@@ -117,4 +117,6 @@ public class WatchList {
     public void add(WatchList watchList) {
     }
 
+    public void setStocks(List<Stock> list) {
+    }
 }
