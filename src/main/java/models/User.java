@@ -6,6 +6,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -97,11 +98,11 @@ public class User {
                 '}';
     }
 
-    public void addWatchList(WatchList watchList) {
+    public void addWatchList(WatchList newWatchList) {
         if (watchList == null) {
-            watchList = new WatchList();
+            watchList = new ArrayList<>();
         }
-        watchList.add(watchList);
+        watchList.add(newWatchList);
     }
 
 
@@ -117,5 +118,6 @@ public class User {
 
 
     public void setWatchLists(List<WatchList> watchLists) {
+        this.watchList = watchLists;
     }
 }

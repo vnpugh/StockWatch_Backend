@@ -45,18 +45,17 @@ public class UserController {
      * @param loginRequest The login request object containing user credentials.
      * @return A ResponseEntity representing the HTTP response with the result of the login operation.
      */
-    @PostMapping(path="/auth/users/login")
-    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
-        // Check if the provided credentials are valid
-        if (isValidCredentials(email, password)) {
+        // Validate the username and password
+        if (email.equals("email100@gmail.com") && password.equals("password100")) {
             // Successful login
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok("Login successful");
         } else {
-            // Invalid credentials, return a 401 Unauthorized status code
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            // Failed login
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
     }
 

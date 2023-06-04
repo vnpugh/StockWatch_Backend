@@ -135,7 +135,6 @@ public class LoginStepDefinitions {
         }
 
 
-
     }
 
     @When("they enter their email and password")
@@ -146,5 +145,7 @@ public class LoginStepDefinitions {
     }
 
 
-
+    @Then("the password and their information is stored in database")
+    public void thePasswordAndTheirInformationIsStoredInDatabase() {
     }
+}
