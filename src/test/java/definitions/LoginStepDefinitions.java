@@ -2,6 +2,7 @@ package definitions;
 
 import com.stockwatch.capstone.CapstoneApplication;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
@@ -21,6 +22,7 @@ public class LoginStepDefinitions {
 
 
     private static final String BASE_URL = "http://localhost:";
+    private static final int PORT = 8080;
 
     @LocalServerPort
     String port;
@@ -34,12 +36,9 @@ public class LoginStepDefinitions {
         requestBody.put("email", "email100@gmail.com");
         requestBody.put("password", "password100");
         request.header("Content-Type", "application/json");
-        response = request.body(requestBody.toString()).post(BASE_URL + port +"/api/users/register");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/users/register");
+
     }
-
-
-
-
 
 
 
@@ -62,4 +61,15 @@ public class LoginStepDefinitions {
         return password.length() >= 8;
     }
 
+    @Then("I should be logged in successfully")
+    public void iShouldBeLoggedInSuccessfully() {
+        int statusCode = response.getStatusCode();
+        if (statusCode == 200) {
+            System.out.println("Login successful!");
+        } else if (statusCode == 401) {
+            Assert.fail("Login failed. Incorrect credentials.");
+        } else {
+            Assert.fail("Unexpected response status code: " + statusCode);
+        }
+    }
 }
