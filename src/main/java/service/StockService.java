@@ -49,7 +49,14 @@ public class StockService {
     }
 
 
+    public void setPriceAlert(String symbol, double targetPrice) {
+        Stock stock = stockRepository.findBySymbolIgnoreCase(symbol);
 
+        if (stock != null) {
+            stock.setTargetPrice(targetPrice);
+            stockRepository.save(stock);
+        }
+    }
 
 
 

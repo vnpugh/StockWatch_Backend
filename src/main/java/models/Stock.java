@@ -46,6 +46,10 @@ public class Stock extends WatchList {
     @JoinColumn(name = "industry_id")
     private Industry industry;
 
+    @Transient
+    private double targetPrice;
+
+
     public Stock() {
     }
 
@@ -118,6 +122,32 @@ public class Stock extends WatchList {
         this.marketCap = marketCap;
     }
 
+    public List<WatchList> getWatchList() {
+        return watchList;
+    }
+
+    public void setWatchLists(List<WatchList> watchLists) {
+        this.watchList = watchLists;
+    }
+
+    public Industry getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(Industry industry) {
+        this.industry = industry;
+    }
+
+    public double getTargetPrice() {
+        return targetPrice;
+    }
+
+    public void setTargetPrice(double targetPrice) {
+        this.targetPrice = targetPrice;
+    }
+
+
+
 
     @Override
     public String toString() {
@@ -136,6 +166,5 @@ public class Stock extends WatchList {
                 '}';
     }
 
-    public double getTargetPrice() {
-    }
+
 }
