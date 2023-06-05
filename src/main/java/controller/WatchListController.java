@@ -64,7 +64,7 @@ public class WatchListController {
      * @param symbol the ticker symbol of the stock to add
      * @return the updated watchlist of the user
      */
-    @PostMapping(path = "/watchlist/stocks/{symbol}")
+    @PostMapping(path = "/api/watchlist/stocks/{symbol}")
     public List<WatchList> addStockToWatchList(@PathVariable String symbol) {
         User user = getLoggedInUser();
         Stock stock = watchListService.addStockToWatchlist(symbol);
