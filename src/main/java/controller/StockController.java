@@ -4,10 +4,7 @@ package controller;
 import models.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import repository.StockRepository;
 import service.StockService;
 
@@ -43,7 +40,11 @@ public class StockController {
         return ResponseEntity.ok("Price alerts checked");
     }
 
-
+    @PostMapping("/stocks/{symbol}/priceAlert")
+    public ResponseEntity<String> setPriceAlert(@PathVariable String symbol, @RequestParam double targetPrice) {
+        stockService.setPriceAlert(symbol, targetPrice);
+        return ResponseEntity.ok("Price alert set successfully for " + symbol);
+    }
 
 
 

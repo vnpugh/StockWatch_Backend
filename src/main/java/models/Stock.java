@@ -135,4 +135,7 @@ public class Stock extends WatchList {
                 ", industry=" + industry +
                 '}';
     }
+
+    public double getTargetPrice() {
+    }
 }

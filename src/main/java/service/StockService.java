@@ -30,5 +30,37 @@ public class StockService {
 
 
     public void checkPriceAlerts() {
+        List<Stock> stocks = stockRepository.findAll();
+
+        for (Stock stock : stocks) {
+            Double currentPrice = stock.getPrice();
+            Double targetPrice = stock.getTargetPrice();
+
+            if (currentPrice != null && targetPrice != null) {
+                if (currentPrice < targetPrice) {
+                    System.out.println(stock.getSymbol() + " is below the target price of " + targetPrice);
+                } else if (currentPrice > targetPrice) {
+                    System.out.println(stock.getSymbol() + " is above the target price of " + targetPrice);
+                } else {
+                    System.out.println(stock.getSymbol() + " is at the target price of " + targetPrice);
+                }
+            }
+        }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
