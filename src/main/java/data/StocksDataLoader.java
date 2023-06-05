@@ -1,6 +1,7 @@
 package data;
 
 
+import models.Industry;
 import models.Stock;
 import models.User;
 import models.WatchList;
@@ -15,8 +16,10 @@ import service.UserService;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @Component
 public class StocksDataLoader implements CommandLineRunner {
@@ -98,6 +101,36 @@ public class StocksDataLoader implements CommandLineRunner {
         watchList.setStocks(Arrays.asList(stock1, stock2, stock3));
         user.setWatchLists(Collections.singletonList(watchList));
         userRepository.save(user);
+
+        // Create stock industries
+        List<Industry> industry = new ArrayList<>();
+        Industry industry1 = new Industry("Technology");
+        Industry industry2 = new Industry("Real Estate");
+        Industry industry3 = new Industry("Communication Services");
+        Industry industry4 = new Industry("Consumer Staples");
+        Industry industry5 = new Industry("Utilities");
+        Industry industry6 = new Industry("Healthcare");
+        Industry industry7 = new Industry("Finance");
+        Industry industry8 = new Industry("Industrials");
+        Industry industry9 = new Industry("Energy");
+        Industry industry10 = new Industry("Materials");
+        Industry industry11 = new Industry("Consumer Discretionary");
+
+        industry.add(industry1);
+        industry.add(industry2);
+        industry.add(industry3);
+        industry.add(industry4);
+        industry.add(industry5);
+        industry.add(industry6);
+        industry.add(industry7);
+        industry.add(industry8);
+        industry.add(industry9);
+        industry.add(industry10);
+        industry.add(industry11);
+
+
+
+
 
 
 

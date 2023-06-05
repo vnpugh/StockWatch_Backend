@@ -11,10 +11,10 @@ Feature: Watchlist Management
 #    When the user requests to create a new watchlist
 #    Then the API should create a new watchlist for the user and return it with HTTP status 201
 #
-  Scenario: User can add a stock to their watchlist by ticker symbol
-
-    When the user adds a stock to their watchlist by symbol
-    Then the stock is added to the user's watchlist
+#  Scenario: User can add a stock to their watchlist by ticker symbol
+#
+#    When the user adds a stock to their watchlist by symbol
+#    Then the stock is added to the user's watchlist
 
 #  Scenario: User can update the name of a watchlist
 #    Given the user has a watchlist with ID "1"

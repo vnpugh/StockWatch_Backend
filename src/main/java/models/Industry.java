@@ -18,14 +18,8 @@ public class Industry {
     @OneToMany(mappedBy = "industry")
     private List<Stock> stocks;
 
-
-
-
-
-
-
-
-
+    public Industry() {
+    }
 
 
 }
