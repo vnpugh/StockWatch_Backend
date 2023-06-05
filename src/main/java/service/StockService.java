@@ -29,10 +29,6 @@ public class StockService {
     }
 
 
-
-
-
-
-
-
+    public void checkPriceAlerts() {
+    }
 }

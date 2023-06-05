@@ -37,6 +37,14 @@ public class StockController {
         return ResponseEntity.ok(searchResults);
     }
 
+    @GetMapping("/stocks/checkPriceAlerts")
+    public ResponseEntity<String> checkPriceAlerts() {
+        stockService.checkPriceAlerts();
+        return ResponseEntity.ok("Price alerts checked");
+    }
+
+
+
 
 
 
