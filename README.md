@@ -4,7 +4,6 @@
 <h2>Technical Requirements</h2>
 <h1>The Planning Process</h1>
 <h2>Tools & Technologies Used</h2>
-<h2>Wireframes</h2>
 <h2>User Stories</h2>
 <h2>ERD Diagram</h2>
 <h2>REST API Endpoints</h2>
