@@ -21,8 +21,7 @@ public class Industry {
     public Industry() {
     }
 
-    public Industry(Long industryId, String industry) {
-        this.industryId = industryId;
+    public Industry(String industry) {
         this.industry = industry;
     }
 
