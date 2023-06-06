@@ -13,8 +13,9 @@ import service.StockService;
 
 import java.util.List;
 
+
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/api/stocks")
 public class StockController {
 
     private StockRepository stockRepository;
@@ -31,24 +32,37 @@ public class StockController {
         this.stockRepository = stockRepository;
     }
 
-    @GetMapping("/stocks")
-    public ResponseEntity<List<Stock>> searchStockByCompanyOrSymbol(@RequestParam(required = false) String query) {
-        List<Stock> searchResults = stockService.searchStockByCompanyOrSymbol(query);
+    /**
+     * METHOD: GET endpoint: http://localhost:8080/api/stocks/companyOrSymbol?company=&symbol=
+     *
+     * @param company
+     * @param symbol
+     * @return List of stocks filtered by either symbol or company.
+     */
+    @GetMapping("/companyOrSymbol")
+    public ResponseEntity<List<Stock>> searchStockByCompanyOrSymbol(@RequestParam(required = false, name = "company") String company, @RequestParam(required = false, name = "symbol") String symbol) {
+        List<Stock> searchResults = stockService.searchStockByCompanyOrSymbol(company, symbol);
         return ResponseEntity.ok(searchResults);
     }
 
-    @GetMapping("/stocks/checkPriceAlerts")
-    public ResponseEntity<String> checkPriceAlerts() {
-        stockService.checkPriceAlerts();
-        return ResponseEntity.ok("Price alerts checked");
+    /**
+     * METHOD: GET http://localhost:8080/api/stocks
+     *
+     * @return List of stocks in the system.
+     */
+    @GetMapping
+    public ResponseEntity<List<Stock>> getAllStocks() {
+        List<Stock> searchResults = stockService.getAllStocks();
+        return ResponseEntity.ok(searchResults);
     }
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+

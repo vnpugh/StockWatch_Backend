@@ -7,13 +7,16 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 
+
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Long> {
 
 
-    Stock findStockByCompanyOrSymbol(String symbol);
+    Stock findStockByCompanyOrSymbol(String company, String symbol);
 
     Stock findBySymbolIgnoreCase(String symbol);
 
-    List<Stock> findByCompanyContainingIgnoreCaseOrSymbolContainingIgnoreCase(String companyQuery, String symbolQuery);
+    List<Stock> findByCompanyEqualsIgnoreCaseOrSymbolEqualsIgnoreCase(String companyQuery, String symbolQuery);
+
+    List<Stock> findByStockIdIn(List<Integer> ids);
 }

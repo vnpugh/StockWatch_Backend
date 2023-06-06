@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HealthController {
 
     /**
-     * Api to check health of server.
+     * Api to check the health of server.
      *
      * @return
      */
