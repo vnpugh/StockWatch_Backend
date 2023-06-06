@@ -1,5 +1,6 @@
 package security;
 
+import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,8 +9,8 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,7 +19,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.context.WebApplicationContext;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableWebSecurity
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
 
     private MyUserDetailsService myUserDetailsService;
@@ -29,7 +31,9 @@ public class SecurityConfiguration {
      * @param myUserDetailsService the MyUserDetailsService instance to be injected
      */
     @Autowired
-    public void setMyUserDetailsService(MyUserDetailsService myUserDetailsService){ this.myUserDetailsService = myUserDetailsService;}
+    public void setMyUserDetailsService(MyUserDetailsService myUserDetailsService) {
+        this.myUserDetailsService = myUserDetailsService;
+    }
 
     /**
      * Creates and returns an instance of JwtRequestFilter
@@ -37,40 +41,44 @@ public class SecurityConfiguration {
      * @return the JwtRequestFilter instance
      */
     @Bean
-    public JwtRequestFilter authJwtRequestFilter(){return new JwtRequestFilter();}
+    public JwtRequestFilter authJwtRequestFilter() {
+        return new JwtRequestFilter();
+    }
 
     /**
      * Creates and returns an instance of BCryptPasswordEncoder
-     * @return the BCryptPasswordEncoder instance
      *
+     * @return the BCryptPasswordEncoder instance
      */
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     /**
      * Configures the security filter chain.
+     *
      * @param http the HTTPSecurity instance to configure
      * @return the configured SecurityFilterChain
      * @throws Exception if an error occurs during configuratoin
      */
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.authorizeRequests().antMatchers(
-                        "/api/auth/users/register",
-                        "/api/auth/users/login"
-                ).permitAll()
-                .anyRequest().authenticated()
-                .and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().csrf().disable();
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.authorizeRequests()
+                .antMatchers("/api/auth/users/login", "/api/auth/users/register", "/console/**").permitAll()
+                .anyRequest().authenticated();
+
         http.addFilterBefore(authJwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 
     /**
      * Creates and returns an instance of AuthenticationManager
+     *
      * @param authConfig the AuthenticationConfiguration instance
      * @return the AuthenticationManager instance
      * @throws Exception if an error occurs during creation
@@ -82,6 +90,7 @@ public class SecurityConfiguration {
 
     /**
      * Creates and returns an instance of DaoAuthenticationProvier
+     *
      * @return the DaoAuthenticationProvider instance
      */
     @Bean
@@ -100,8 +109,8 @@ public class SecurityConfiguration {
 
     @Bean
     @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
-    public MyUserDetails myUserDetails() {
-        return (MyUserDetails) SecurityContextHolder.getContext().getAuthentication()
+    public User myUserDetails() {
+        return (User) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal();
     }
 }

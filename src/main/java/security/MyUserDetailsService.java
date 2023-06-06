@@ -6,24 +6,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import service.UserService;
+import repository.UserRepository;
+
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
     /**
      * UserDetailsService requires one read-only method, which finds a User by the unique email and stores in MyUserDetails
      */
-    private UserService userService;
-
-    /**
-     * Sets the UserService dependency.
-     *
-     * @param userService the UserService instance to be injected
-     */
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
+    private UserRepository userRepository;
 
     /**
      * Loads a user by the given email and returns UserDetails.
@@ -34,7 +26,7 @@ public class MyUserDetailsService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userService.findUserByEmail(email);
+        User user = userRepository.findByEmail(email);
         return new MyUserDetails(user);
     }
 }

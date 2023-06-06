@@ -20,6 +20,7 @@ public class MyUserDetails implements UserDetails {
         this.user = user;
     }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new HashSet<>();
@@ -59,5 +60,5 @@ public class MyUserDetails implements UserDetails {
         return user;
     }
 
-}
 
+}
