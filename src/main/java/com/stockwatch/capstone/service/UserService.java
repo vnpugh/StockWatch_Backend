@@ -2,6 +2,7 @@ package com.stockwatch.capstone.service;
 
 import com.stockwatch.capstone.exceptions.InformationExistException;
 import com.stockwatch.capstone.exceptions.InformationNotFoundException;
+import com.stockwatch.capstone.exceptions.InvalidInputException;
 import com.stockwatch.capstone.models.User;
 import com.stockwatch.capstone.models.request.LoginRequest;
 import com.stockwatch.capstone.models.request.RegisterUserRequest;
@@ -54,14 +55,18 @@ public class UserService {
      * @return LoginResponse
      */
     public LoginResponse loginUser(LoginRequest loginRequest) {
-        Authentication authentication = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getEmail(), loginRequest.getPassword())
-        );
+        try {
+            Authentication authentication = authManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getEmail(), loginRequest.getPassword())
+            );
 
-        MyUserDetails user = (MyUserDetails) authentication.getPrincipal();
-        String accessToken = jwtUtils.generateJwtToken(user);
-        return new LoginResponse(user.getUser().getEmail(), accessToken);
+            MyUserDetails user = (MyUserDetails) authentication.getPrincipal();
+            String accessToken = jwtUtils.generateJwtToken(user);
+            return new LoginResponse(user.getUser().getEmail(), accessToken);
+        } catch (Exception e) {
+            throw new InvalidInputException("invalid username/password");
+        }
     }
 
 
