@@ -21,6 +21,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+
+
+
 @Component
 public class StocksDataLoader implements CommandLineRunner {
 
@@ -44,10 +47,12 @@ public class StocksDataLoader implements CommandLineRunner {
     public void setWatchListRepository(WatchListRepository watchListRepository) {
         this.watchListRepository = watchListRepository;
     }
+
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     @Autowired
     public void setStockRepository(StockRepository stockRepository) {
         this.stockRepository = stockRepository;
@@ -72,9 +77,9 @@ public class StocksDataLoader implements CommandLineRunner {
         BigDecimal marketCap9 = new BigDecimal("3.82E11");
         BigDecimal marketCap10 = new BigDecimal("9.01E11");
 
-        Stock stock1 = new Stock(101,"Apple Inc.", "AAPL", 180.09, 2.84, 4.5, marketCap1);
+        Stock stock1 = new Stock(101, "Apple Inc.", "AAPL", 180.09, 2.84, 4.5, marketCap1);
         stockRepository.save(stock1);
-        Stock stock2 = new Stock(102,"Alphabet Inc.", "GOOGL", 1500.0, 10.0, 4.0, marketCap2);
+        Stock stock2 = new Stock(102, "Alphabet Inc.", "GOOGL", 1500.0, 10.0, 4.0, marketCap2);
         stockRepository.save(stock2);
         Stock stock3 = new Stock(103, "Microsoft Corporation", "MSFT", 300.0, 5.0, 4.2, marketCap3);
         stockRepository.save(stock3);
@@ -94,13 +99,13 @@ public class StocksDataLoader implements CommandLineRunner {
         stockRepository.save(stock10);
 
 
-
         User user = new User("Jane", "email100@gmail.com", "password100");
+        userRepository.save(user);
         WatchList watchList = new WatchList();
         watchList.setUser(user);
         watchList.setStocks(Arrays.asList(stock1, stock2, stock3));
         user.setWatchLists(Collections.singletonList(watchList));
-        userRepository.save(user);
+
 
         // Create stock industries
         List<Industry> industry = new ArrayList<>();
@@ -127,15 +132,6 @@ public class StocksDataLoader implements CommandLineRunner {
         industry.add(industry9);
         industry.add(industry10);
         industry.add(industry11);
-
-
-
-
-
-
-
-
-
 
 
     }

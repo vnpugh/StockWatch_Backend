@@ -13,112 +13,94 @@ import service.WatchListService;
 import java.util.List;
 
 
+
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/api/watchlist")
 public class WatchListController {
+    @Autowired
     private WatchListService watchListService;
-    private UserRepository userRepository;
 
     @Autowired
-    public void setWatchListService(WatchListService watchListService){
-        this.watchListService = watchListService;
-    }
-
-
+    private UserRepository userRepository;
 
     //**User can view all stocks on their watch list.
+
     /**
-     * GET: endpoint http://localhost:8080/api/watchlist
+     * GET: endpoint http://localhost:8080/api/watchlist/stocks?id=
      * Retrieves (view) all stocks on the user's watchlist.
+     *
+     * @param id watchlist id
      * @return a list of stocks on the watchlist
      */
-    @GetMapping(path = "/watchlist")
-    public List<Stock> getAllStocksOnWatchList(){
-        User user = getLoggedInUser();
-        return watchListService.getAllStocksOnWatchList(user);
+    @GetMapping("/stocks")
+    public List<Stock> getAllStocksOnWatchList(@RequestParam(name = "id") Long id) {
+        return watchListService.getAllStocksOnWatchList(id);
     }
-
 
 
     //**User can create a custom watch list.
-            /**
-             *  POST: endpoint http://localhost:8080/api/watchlist
-             *  Create a new watchlist for the logged-in user.
-             *  The new watchlist is saved for the user (User Repository)
-             * @return ResponseEntity<WatchList> The created watchlist with HTTP status 201 (Created).
-             */
-    @PostMapping(path = "/watchlist")
-    public ResponseEntity<WatchList> createWatchList() {
-        User user = getLoggedInUser();
-        WatchList watchList = new WatchList();
-        user.addWatchList(watchList);
-        userRepository.save(user);
+
+    /**
+     * POST: endpoint http://localhost:8080/api/watchlist/create
+     * Create a new watchlist for the logged-in user.
+     * The new watchlist is saved for the user (User Repository)
+     *
+     * @return ResponseEntity<WatchList> The created watchlist with HTTP status 201 (Created).
+     */
+    @PostMapping(path = "/create")
+    public ResponseEntity<WatchList> createWatchList(@RequestBody CreateWatchlistRequest createWatchlist) {
+        WatchList watchList = watchListService.createWatchlist(createWatchlist);
         return ResponseEntity.status(HttpStatus.CREATED).body(watchList);
     }
 
 
 //**User can add a stock to their watch list by ticker symbol.
+
     /**
-     * POST: endpoint http://localhost:8080/api/watchlist/stocks/{symbol}
+     * POST: endpoint http://localhost:8080/api/watchlist/addStock?symbol=&watchlist_id=
      * Adds a stock to the user's watchlist by the specified symbol.
+     *
      * @param symbol the ticker symbol of the stock to add
      * @return the updated watchlist of the user
      */
-    @PostMapping(path = "/api/watchlist/stocks/{symbol}")
-    public List<WatchList> addStockToWatchList(@PathVariable String symbol) {
-        User user = getLoggedInUser();
-        Stock stock = watchListService.addStockToWatchlist(symbol);
-        return user.getWatchList();
+    @PostMapping(path = "/addStock")
+    public WatchList addStockToWatchList(@RequestParam String symbol, @RequestParam(name = "watchlist_id") Long watchlistId) {
+        WatchList watchList = watchListService.addStockToWatchlist(symbol, watchlistId);
+        return watchList;
     }
-    private User getLoggedInUser() { // method to get the logged-in user (dummy user)
-        User user = new User();
-        user.setEmail("email100@gmail.com");
-        return user;
-    }
-
-
 
     //**User can update the name of a watch list.
+
     /**
-     * PUT: endpoint http://localhost:8080/api/watchlist/{watchListId}
+     * PUT: endpoint http://localhost:8080/api/watchlist/modify?new_name=&watchlist_id=
      * Update the name of a watchlist for the logged-in user.
-     * @param watchListId The ID of the watchlist to update.
-     * @param newListName     The new name for the watchlist.
+     *
+     * @param watchlistId The ID of the watchlist to update.
+     * @param newListName The new name for the watchlist.
      * @return ResponseEntity<WatchList> The updated watchlist with HTTP status 200 (OK).
-     *         If the watchlist is not found, returns HTTP status 404 (Not Found).
+     * If the watchlist is not found, returns HTTP status 404 (Not Found).
      */
-    @PutMapping(path = "/watchlist/{watchListId}")
-        public ResponseEntity<WatchList> updateWatchListName(@PathVariable Long watchListId, Long newListName) {
-            User user = getLoggedInUser();
-            WatchList watchList = user.findWatchListByWatchListId(watchListId);
-
-            if (watchList != null) {
-                watchList.setListName();updateWatchListName(newListName, newListName);
-                userRepository.save(user);   // Save the user to the updated watchlist
-                return ResponseEntity.ok(watchList);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+    @PutMapping(path = "/modify")
+    public ResponseEntity<WatchList> updateWatchListName(@RequestParam(name = "new_name") String newListName, @RequestParam(name = "watchlist_id") Long watchlistId) {
+        WatchList watchList = watchListService.modifyWatchlist(watchlistId, newListName);
+        return ResponseEntity.status(HttpStatus.CREATED).body(watchList);
     }
-
 
 
 //**User can delete a stock from their watch list.
+
     /**
+     * METHOD: DELETE endpoint http://localhost:8080/api/watchlist/deleteStock?symbol=&watchlist_id=
      * Delete a stock from the user's watchlist by symbol.
+     *
      * @param symbol The symbol of the stock to delete.
      * @return List<WatchList> The updated watchlist after deleting the stock.
      */
-    @DeleteMapping(path = "/watchlist/stocks/{symbol}")
-    public List<WatchList> deleteStockFromWatchList(@PathVariable String symbol) {
-        User user = getLoggedInUser();
-        watchListService.deleteStock(user, symbol);
-        return user.getWatchList();
+    @DeleteMapping(path = "/deleteStock")
+    public ResponseEntity<WatchList> deleteStockFromWatchList(@RequestParam String symbol, @RequestParam(name = "watchlist_id") Long watchlistId) {
+        WatchList watchList = watchListService.deleteStock(symbol, watchlistId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(watchList);
     }
-
-
-
-
 
 
 }

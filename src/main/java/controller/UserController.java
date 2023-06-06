@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import repository.UserRepository;
 import service.UserService;
-@RestController
+
+
+@RestControllerAdvice
 @RequestMapping(path = "/api")
 public class UserController {
     private UserService userService;
@@ -18,6 +20,7 @@ public class UserController {
 
     /**
      * Sets the UserService instance for the current class.
+     *
      * @param userService The UserService instance to be set.
      */
     @Autowired
@@ -27,45 +30,37 @@ public class UserController {
 
 
     /**
-     * POST: endpoint http://localhost:8080/api/users/register
+     * POST: endpoint http://localhost:8080/api/auth/users/register
      * Registers a new user.
-     * @param userObject The User object containing the details of the user to be registered.
+     *
+     * @param userRequest The User object containing the details of the user to be registered.
      * @return The registered User object.
      */
     @PostMapping(path = "/auth/users/register")
-    public User registerUser(@RequestBody User userObject) {
-        return userService.registerUser(userObject);
+    public User registerUser(@RequestBody RegisterUserRequest userRequest) {
+        return userService.registerUser(userRequest);
     }
-
 
 
     /**
-     * POST: endpoint http://localhost:8080/api/users/login
+     * POST: endpoint http://localhost:8080/api/auth/users/login
      * Handles the login request for a user.
+     *
      * @param loginRequest The login request object containing user credentials.
      * @return A ResponseEntity representing the HTTP response with the result of the login operation.
      */
+    @PostMapping(path = "/auth/users/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
-        String email = loginRequest.getEmail();
-        String password = loginRequest.getPassword();
-
-        // Validate the username and password
-        if (email.equals("email100@gmail.com") && password.equals("password100")) {
-            // Successful login
-            return ResponseEntity.ok("Login successful");
-        } else {
-            // Failed login
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+        try {
+            LoginResponse response = userService.loginUser(loginRequest);
+            return ResponseEntity.ok().body(response);
+        } catch (BadCredentialsException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
-//    private boolean isValidCredentials(String email, String password) {
-//        // Add your logic to validate the credentials against the user database or any other authentication mechanism
-//        // Return true if the credentials are valid, false otherwise
-//        return email.equals("email100@gmail.com") && password.equals("password100");
-//    }
     private boolean isValidCredentials(String email, String password) {
-        User user = userRepository.findUserByEmail(email);
+        User user = userRepository.findByEmail(email);
         if (user != null && user.getPassword().equals(password)) {
             return true;
         } else {
@@ -74,12 +69,10 @@ public class UserController {
     }
 
 
-
-
-
     /**
      * GET: http://localhost:8080/api/users
      * Retrieves the current user.
+     *
      * @return The User object representing the current user.
      */
     @GetMapping(path = "/users")
@@ -91,18 +84,20 @@ public class UserController {
     /**
      * PUT: http://localhost:8080/api/users
      * Updates the details of the current user.
-     * @param userObject The User object containing the updated details of the user.
+     *
+     * @param updateUserRequest The User object containing the updated details of the user.
      * @return The updated User object representing the current user.
      */
     @PutMapping(path = "/users")
-    public User updateCurrentUser(@RequestBody User userObject) {
-        return userService.updateCurrentUser(userObject);
+    public User updateCurrentUser(@RequestBody UpdateUserRequest updateUserRequest) {
+        return userService.updateCurrentUser(updateUserRequest);
     }
 
 
     /**
      * DELETE: http://localhost:8080/api/users
      * Deletes the current user.
+     *
      * @return A ResponseEntity representing the HTTP response with the result of the deletion operation.
      */
 
@@ -110,8 +105,6 @@ public class UserController {
     public ResponseEntity<?> deleteCurrentUser() {
         return userService.deleteCurrentUser();
     }
-
-
 
 
 }
