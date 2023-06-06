@@ -1,6 +1,7 @@
 package definitions;
 
 import com.stockwatch.capstone.CapstoneApplication;
+import com.stockwatch.capstone.models.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -8,7 +9,6 @@ import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import models.User;
 import net.minidev.json.JSONObject;
 import org.json.JSONException;
 import org.junit.Assert;
@@ -23,20 +23,19 @@ import org.springframework.http.ResponseEntity;
         classes = CapstoneApplication.class)
 public class StockStepDefinitions {
 
-    private final Logger log = LoggerFactory.getLogger(StockStepDefinitions.class);
     private static final String BASE_URL = "http://localhost:";
     private static final int PORT = 8080;
-
+    private static Response response;
+    private final Logger log = LoggerFactory.getLogger(StockStepDefinitions.class);
     @LocalServerPort
     String port;
-
-    private static Response response;
     private ResponseEntity<User> responseEntity;
 
 
     @When("I enter my valid email and password")
     public void iEnterMyValidEmailAndPassword() {
     }
+
     @Given("a registered user")
     public void aRegisteredUser() throws JSONException {
         RequestSpecification request = RestAssured.given();
@@ -47,9 +46,6 @@ public class StockStepDefinitions {
         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/register");
 
     }
-
-
-
 
 
     //<-- WatchList -->
