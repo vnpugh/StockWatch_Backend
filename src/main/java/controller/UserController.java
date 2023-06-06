@@ -3,6 +3,7 @@ package controller;
 import models.User;
 import models.request.LoginRequest;
 import models.request.RegisterUserRequest;
+import models.request.UpdateUserRequest;
 import models.response.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
