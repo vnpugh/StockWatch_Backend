@@ -1,17 +1,13 @@
 package models;
 
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
-import java.util.List;
 
 @Entity
-@Table(name="stocks")
-public class Stock extends WatchList {
+@Table(name = "stocks")
+public class Stock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "stock_id")
@@ -35,13 +31,6 @@ public class Stock extends WatchList {
     @Column
     private BigDecimal marketCap;
 
-    //Multiple stocks can belong to Many watchlists
-    @ManyToMany
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(name = "stocks_watchList", joinColumns =
-    @JoinColumn(name = "stock_id"), inverseJoinColumns = @JoinColumn(name = "watchList_id"))
-    private List<WatchList> watchList;
-
     @ManyToOne
     @JoinColumn(name = "industry_id")
     private Industry industry;
@@ -50,8 +39,7 @@ public class Stock extends WatchList {
     }
 
     public Stock(Integer stockId, String company, String symbol, Double price,
-                 Double stockChange, Double wallStreetRating, BigDecimal marketCap)
-     {
+                 Double stockChange, Double wallStreetRating, BigDecimal marketCap) {
         this.stockId = stockId;
         this.company = company;
         this.symbol = symbol;
@@ -131,7 +119,6 @@ public class Stock extends WatchList {
                 ", stockChange=" + percentFormat.format(stockChange) +
                 ", wallStreetRating=" + wallStreetRating +
                 ", marketCap=" + marketCap +
-                ", watchList=" + watchList +
                 ", industry=" + industry +
                 '}';
     }

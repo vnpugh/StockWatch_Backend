@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="industry")
+@Table(name = "industry")
 public class Industry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +15,7 @@ public class Industry {
     @Column(name = "industry")
     private String industry;
 
-    @OneToMany(mappedBy = "industry")
+    @OneToMany()
     private List<Stock> stocks;
 
     public Industry() {

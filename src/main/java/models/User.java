@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "users")
 public class User {
     @Id
-    @Column
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -28,6 +28,7 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password; //ignore password
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<WatchList> watchList;
@@ -41,8 +42,6 @@ public class User {
         this.password = password;
 
     }
-
-
 
 
     public Long getId() {
@@ -86,7 +85,6 @@ public class User {
     }
 
 
-
     @Override
     public String toString() {
         return "User{" +
@@ -94,7 +92,6 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", watchList=" + watchList +
                 '}';
     }
 
@@ -104,7 +101,6 @@ public class User {
         }
         watchList.add(newWatchList);
     }
-
 
 
     public WatchList findWatchListByWatchListId(Long watchListId) {
@@ -120,4 +116,5 @@ public class User {
     public void setWatchLists(List<WatchList> watchLists) {
         this.watchList = watchLists;
     }
+
 }

@@ -6,13 +6,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 @Entity
-@Table(name="watchlist")
+@Table(name = "watchlist")
 public class WatchList {
 
 
-
-    @Column
+    @Column(name = "watchlist_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long watchListId;
@@ -26,16 +27,15 @@ public class WatchList {
     @Column
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "watchlist_stocks",
             joinColumns = @JoinColumn(name = "watchlist_id"),
             inverseJoinColumns = @JoinColumn(name = "stock_id"))
     private List<Stock> stocks;
-
 
 
 //    @OneToMany
@@ -55,9 +55,12 @@ public class WatchList {
     }
 
 
-
     public List<Stock> getStocks() {
         return stocks;
+    }
+
+    public void setStocks(List<Stock> list) {
+        this.stocks = list;
     }
 
     public Long getWatchListId() {
@@ -70,6 +73,10 @@ public class WatchList {
 
     public String getListName() {
         return listName;
+    }
+
+    public void setListName(String listName) {
+        this.listName = listName;
     }
 
     public void setListName() {
@@ -106,17 +113,12 @@ public class WatchList {
                 "watchListId=" + watchListId +
                 ", listName='" + listName + '\'' +
                 ", dateCreated=" + dateCreated +
-                ", description=" + description +
+                ", description='" + description + '\'' +
                 ", user=" + user +
+                ", stocks=" + stocks +
                 '}';
     }
 
-
-
-
     public void add(WatchList watchList) {
-    }
-
-    public void setStocks(List<Stock> list) {
     }
 }
