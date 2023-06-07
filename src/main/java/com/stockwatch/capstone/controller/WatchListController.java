@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -47,7 +48,7 @@ public class WatchListController {
      * @return ResponseEntity<WatchList> The created watchlist with HTTP status 201 (Created).
      */
     @PostMapping(path = "/create")
-    public ResponseEntity<WatchList> createWatchList(@RequestBody CreateWatchlistRequest createWatchlist) {
+    public ResponseEntity<WatchList> createWatchList(@Valid @RequestBody CreateWatchlistRequest createWatchlist) {
         WatchList watchList = watchListService.createWatchlist(createWatchlist);
         return ResponseEntity.status(HttpStatus.CREATED).body(watchList);
     }

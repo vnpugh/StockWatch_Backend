@@ -1,10 +1,17 @@
 package com.stockwatch.capstone.models.request;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
 public class UpdateUserRequest {
+    @NotEmpty(message = "Name cannot be empty")
     private String firstName;
 
+    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    @NotEmpty(message = "Email cannot be empty")
     private String email;
 
+    @NotEmpty(message = "Password cannot be empty")
     private String password;
 
     public String getFirstName() {

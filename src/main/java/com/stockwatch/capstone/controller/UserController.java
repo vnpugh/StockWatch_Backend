@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestControllerAdvice
 @RequestMapping(path = "/api")
 public class UserController {
@@ -40,7 +42,7 @@ public class UserController {
      * @return The registered User object.
      */
     @PostMapping(path = "/auth/users/register")
-    public User registerUser(@RequestBody RegisterUserRequest userRequest) {
+    public User registerUser(@Valid @RequestBody RegisterUserRequest userRequest) {
         return userService.registerUser(userRequest);
     }
 
@@ -53,7 +55,7 @@ public class UserController {
      * @return A ResponseEntity representing the HTTP response with the result of the login operation.
      */
     @PostMapping(path = "/auth/users/login")
-    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
         try {
             LoginResponse response = userService.loginUser(loginRequest);
             return ResponseEntity.ok().body(response);

@@ -1,9 +1,12 @@
 package com.stockwatch.capstone.models.request;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.List;
 
 public class CreateWatchlistRequest implements Serializable {
+
+    @NotEmpty(message = "Name cannot be empty")
     private String listName;
 
     private String description;
