@@ -1,0 +1,320 @@
+{
+  "info": {
+    "_postman_id": "e3e6aa64-40cc-4498-812f-ca389787bc10",
+    "name": "Stock Watch API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get stocks by company or symbol",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "62f00bc6-d0ef-421a-94ed-12b542adb981",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "url": {
+          "raw": "localhost:8080/api/stocks/companyOrSymbol?company=&symbol=",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "stocks",
+            "companyOrSymbol"
+          ],
+          "query": [
+            {
+              "key": "company",
+              "value": ""
+            },
+            {
+              "key": "symbol",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "User registration",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "62f00bc6-d0ef-421a-94ed-12b542adb981",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"email1002@gmail.com\",\n    \"password\": \"password1003\",\n    \"firstName\": \"ABC1\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/api/auth/users/register",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "auth",
+            "users",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "User login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "62f00bc6-d0ef-421a-94ed-12b542adb981",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"email1002@gmail.com\",\n    \"password\": \"password1003\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/api/auth/users/login",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "auth",
+            "users",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create custom watchlist",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbWFpbDEwMDJAZ21haWwuY29tIiwiaWF0IjoxNjg2MDU5ODU5LCJleHAiOjE2ODYwNjA0NTl9.m6M8sMsTnmeqgding2BYnEJy1gqKavqLV77Ub-bC3Ds",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"listName\":\"test1\",\n    \"description\": \"abc\",\n    \"stockIds\": [1,2]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/api/watchlist/create",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "watchlist",
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get stocks in watchlist",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbWFpbDEwMDJAZ21haWwuY29tIiwiaWF0IjoxNjg2MDU5ODU5LCJleHAiOjE2ODYwNjA0NTl9.m6M8sMsTnmeqgding2BYnEJy1gqKavqLV77Ub-bC3Ds",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "localhost:8080/api/watchlist/stocks?id=1",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "watchlist",
+            "stocks"
+          ],
+          "query": [
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all stocks",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbWFpbDEwMDJAZ21haWwuY29tIiwiaWF0IjoxNjg2MDU5ODU5LCJleHAiOjE2ODYwNjA0NTl9.m6M8sMsTnmeqgding2BYnEJy1gqKavqLV77Ub-bC3Ds",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "localhost:8080/api/stocks",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "stocks"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add stock to a watchlist",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbWFpbDEwMDJAZ21haWwuY29tIiwiaWF0IjoxNjg2MDU5ODU5LCJleHAiOjE2ODYwNjA0NTl9.m6M8sMsTnmeqgding2BYnEJy1gqKavqLV77Ub-bC3Ds",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "localhost:8080/api/watchlist/addStock?symbol=WMT&watchlist_id=1",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "watchlist",
+            "addStock"
+          ],
+          "query": [
+            {
+              "key": "symbol",
+              "value": "WMT"
+            },
+            {
+              "key": "watchlist_id",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Rename watchlist",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbWFpbDEwMDJAZ21haWwuY29tIiwiaWF0IjoxNjg2MDU5ODU5LCJleHAiOjE2ODYwNjA0NTl9.m6M8sMsTnmeqgding2BYnEJy1gqKavqLV77Ub-bC3Ds",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "localhost:8080/api/watchlist/modify?new_name=new test&watchlist_id=1",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "watchlist",
+            "modify"
+          ],
+          "query": [
+            {
+              "key": "new_name",
+              "value": "new test"
+            },
+            {
+              "key": "watchlist_id",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete stock from watchlist",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlbWFpbDEwMDJAZ21haWwuY29tIiwiaWF0IjoxNjg2MDU5ODU5LCJleHAiOjE2ODYwNjA0NTl9.m6M8sMsTnmeqgding2BYnEJy1gqKavqLV77Ub-bC3Ds",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "localhost:8080/api/watchlist/deleteStock?symbol=TGT&watchlist_id=1",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "watchlist",
+            "deleteStock"
+          ],
+          "query": [
+            {
+              "key": "symbol",
+              "value": "TGT"
+            },
+            {
+              "key": "watchlist_id",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

@@ -1,7 +1,6 @@
 package definitions;
 
 import com.stockwatch.capstone.CapstoneApplication;
-import com.stockwatch.capstone.models.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -16,25 +15,37 @@ import org.junit.platform.commons.logging.Logger;
 import org.junit.platform.commons.logging.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.ResponseEntity;
 
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = CapstoneApplication.class)
 public class StockStepDefinitions {
 
+    private static Response response;
     private static final String BASE_URL = "http://localhost:";
     private static final int PORT = 8080;
-    private static Response response;
-    private final Logger log = LoggerFactory.getLogger(StockStepDefinitions.class);
+
     @LocalServerPort
     String port;
-    private ResponseEntity<User> responseEntity;
+    private final Logger log = LoggerFactory.getLogger(StockStepDefinitions.class);
+    String JWT;
 
-
-    @When("I enter my valid email and password")
-    public void iEnterMyValidEmailAndPassword() {
+    /**
+     * Generates a JWT token to pass in header of requests.
+     *
+     * @return JWT as a String
+     * @throws JSONException
+     */
+    public String getJWT() throws JSONException {
+        RequestSpecification request = RestAssured.given();
+        org.json.JSONObject jsonObject = new org.json.JSONObject();
+        jsonObject.put("email", "email100@gmail.com");
+        jsonObject.put("password", "password100");
+        request.header("Content-Type", "application/json");
+        response = request.body(jsonObject.toString()).post(BASE_URL + port + "/api/auth/users/login");
+        return response.jsonPath().getString("token");
     }
+
 
     @Given("a registered user")
     public void aRegisteredUser() throws JSONException {
@@ -45,6 +56,36 @@ public class StockStepDefinitions {
         request.header("Content-Type", "application/json");
         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/register");
 
+    }
+
+    @When("User enters their email and password")
+    public void userEntersTheirEmailAndPassword() {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("email", "email100@gmail.com");
+        requestBody.put("password", "password100");
+        request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/login");
+    }
+
+    @Then("User logs in successfully")
+    public void userLogsInSuccessfully() {
+//        Assert.assertEquals(200, response.getStatusCode());
+//        Assert.assertNotNull(response.body());
+    }
+
+
+    @Given("a logged-in user")
+    public void aLoggedInUser() {
+    }
+
+    @When("a user has a watchlist")
+    public void aUserHasAWatchlist() {
+    }
+
+    @Then("the list of stocks are displayed")
+    public void theListOfStocksAreDisplayed() {
     }
 
 

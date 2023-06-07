@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {
+
     /**
-     * UserDetailsService requires one read-only method, which finds a User by the unique email and stores in MyUserDetails
+     * Sets the UserService dependency.
+     *
+     * @param userRepository the userRepository instance to be injected
      */
     @Autowired
     private UserRepository userRepository;

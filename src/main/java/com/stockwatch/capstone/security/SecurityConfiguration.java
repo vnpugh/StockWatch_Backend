@@ -54,6 +54,7 @@ public class SecurityConfiguration {
      * Creates and returns an instance of BCryptPasswordEncoder
      *
      * @return the BCryptPasswordEncoder instance
+     *
      */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
