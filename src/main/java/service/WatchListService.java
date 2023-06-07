@@ -1,17 +1,21 @@
 package service;
 
 import data.StocksDataLoader;
+import exceptions.InvalidInputException;
 import exceptions.StockNotFoundException;
+import exceptions.WatchListNotFoundException;
+import exceptions.WatchlistAlreadyExistsException;
 import models.Stock;
 import models.User;
 import models.WatchList;
+import models.request.CreateWatchlistRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.StockRepository;
 import repository.UserRepository;
 import repository.WatchListRepository;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -29,7 +33,9 @@ public class WatchListService {
 
     @Autowired
     private StocksDataLoader stocksDataLoader;
-    private User user;
+
+    @Autowired
+    private UserService userService;
 
 
     @Autowired
@@ -42,40 +48,109 @@ public class WatchListService {
         this.watchListRepository = watchListRepository;
     }
 
-
-
-    public Stock addStockToWatchlist(String symbol) {
+    /**
+     * Add stock to watchlist
+     *
+     * @param symbol
+     * @param watchlistId
+     * @return Updated watchlist
+     */
+    public WatchList addStockToWatchlist(String symbol, Long watchlistId) throws InvalidInputException, StockNotFoundException {
         Stock stock = stockService.getStockBySymbol(symbol);
-
-        if (stock != null) {
-            List<WatchList> watchlist = user.getWatchList();
-            watchlist.add(stock);
-            return stock;
-        } else {
-            throw new StockNotFoundException("Stock not found for symbol: " + symbol);
-        }   }
-
-
-    public List<Stock> getAllStocksOnWatchList(User user) {
-        List<WatchList> watchlist = user.getWatchList();
-        List<Stock> stocks = new ArrayList<>();
-
-        for (WatchList watchList : watchlist) {
-            stocks.addAll(watchList.getStocks());
+        if (stock == null) {
+            throw new StockNotFoundException("No stock exists for given symbol");
         }
+        User user = userService.getCurrentLoggedInUser();
+        if (user == null) {
+            throw new InvalidInputException("User not logged-in");
+        }
+        WatchList watchList = watchListRepository.findByWatchListIdAndUser(watchlistId, user);
 
-        return stocks;
+        if (watchList != null) {
+            watchList.getStocks().add(stock);
+            watchListRepository.save(watchList);
+            return watchList;
+        } else {
+            throw new InvalidInputException("Stock not found for symbol: " + symbol);
+        }
     }
 
-
-
-    public void deleteStock(User user, String symbol) {//deletes stock from user watchlist
-        List<WatchList> watchList = user.getWatchList();
-        watchList.removeIf(stock -> stock instanceof Stock && ((Stock) stock).getSymbol().equals(symbol));
+    /**
+     * Created watchlist
+     *
+     * @param createWatchlistRequest
+     * @return Custom created watchlist
+     */
+    public WatchList createWatchlist(CreateWatchlistRequest createWatchlistRequest) {
+        User user = userService.getCurrentLoggedInUser();
+        WatchList watchListExisting = watchListRepository.findByListName(createWatchlistRequest.getListName());
+        if (watchListExisting == null) {
+            WatchList watchList = new WatchList();
+            watchList.setListName(createWatchlistRequest.getListName());
+            watchList.setDescription(createWatchlistRequest.getDescription());
+            watchList.setDateCreated(LocalDate.now());
+            watchList.setUser(user);
+            List<Stock> stocks = stockRepository.findByStockIdIn(createWatchlistRequest.getStockIds());
+            watchList.setStocks(stocks);
+            return watchListRepository.save(watchList);
+        } else {
+            throw new WatchlistAlreadyExistsException("Watchlist already exists with given name");
+        }
     }
 
+    /**
+     * Get all stocks by watchlist id
+     *
+     * @param watchlistId
+     * @return List of stocks under watchlist
+     */
+    public List<Stock> getAllStocksOnWatchList(Long watchlistId) {
+        User user = userService.getCurrentLoggedInUser();
+        if (user == null) {
+            throw new InvalidInputException("User not logged-in");
+        }
+        WatchList watchlist = watchListRepository.findByWatchListIdAndUser(watchlistId, user);
+        return watchlist.getStocks();
+    }
 
+    /**
+     * Delete stock under watchlist by symbol.
+     *
+     * @param symbol
+     * @param watchlistId
+     * @return Updated watchlist
+     */
+    public WatchList deleteStock(String symbol, Long watchlistId) {//deletes stock from user watchlist
+        User user = userService.getCurrentLoggedInUser();
+        WatchList watchList = watchListRepository.findByWatchListIdAndUser(watchlistId, user);
+        Stock stock = stockService.getStockBySymbol(symbol);
+        watchList.getStocks().remove(stock);
+        watchListRepository.save(watchList);
 
+        return watchList;
+    }
 
-
+    /**
+     * Modify watchlist name.
+     *
+     * @param watchlistId
+     * @param newName
+     * @return Modified watchlist.
+     */
+    public WatchList modifyWatchlist(Long watchlistId, String newName) {
+        User user = userService.getCurrentLoggedInUser();
+        if (user == null) {
+            throw new InvalidInputException("User not logged-in");
+        }
+        WatchList watchList = watchListRepository.findByWatchListIdAndUser(watchlistId, user);
+        if (watchList == null) {
+            throw new WatchListNotFoundException("Watchlist not found for given id");
+        } else if (newName == null || newName.length() == 0) {
+            throw new InvalidInputException("List name cannot be null/empty");
+        } else if (newName.equals(watchList.getListName())) {
+            throw new InvalidInputException("Given name already matches with existing list");
+        }
+        watchList.setListName(newName);
+        return watchListRepository.save(watchList);
+    }
 }

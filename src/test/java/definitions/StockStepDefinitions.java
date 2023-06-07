@@ -8,7 +8,6 @@ import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import models.User;
 import net.minidev.json.JSONObject;
 import org.json.JSONException;
 import org.junit.Assert;
@@ -16,7 +15,6 @@ import org.junit.platform.commons.logging.Logger;
 import org.junit.platform.commons.logging.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.ResponseEntity;
 
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
@@ -30,13 +28,30 @@ public class StockStepDefinitions {
     @LocalServerPort
     String port;
 
+    String JWT;
     private static Response response;
-    private ResponseEntity<User> responseEntity;
 
 
-    @When("I enter my valid email and password")
-    public void iEnterMyValidEmailAndPassword() {
+
+
+    /**
+     * Generates a JWT token to pass in header of requests.
+     * @return JWT as a String
+     * @throws JSONException
+     */
+    public String getJWT() throws JSONException {
+        RequestSpecification request = RestAssured.given();
+        org.json.JSONObject jsonObject = new org.json.JSONObject();
+        jsonObject.put("email", "email100@gmail.com");
+        jsonObject.put("password", "password100");
+        request.header("Content-Type", "application/json");
+        response = request.body(jsonObject.toString()).post(BASE_URL + port + "/api/auth/users/login");
+        return response.jsonPath().getString("token");
     }
+
+
+
+
     @Given("a registered user")
     public void aRegisteredUser() throws JSONException {
         RequestSpecification request = RestAssured.given();
@@ -47,6 +62,88 @@ public class StockStepDefinitions {
         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/register");
 
     }
+    @When("User enters their email and password")
+    public void userEntersTheirEmailAndPassword() {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("email", "email100@gmail.com");
+        requestBody.put("password", "password100");
+        request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/login");
+    }
+    @Then("User logs in successfully")
+    public void userLogsInSuccessfully() {
+//        Assert.assertEquals(200, response.getStatusCode());
+//        Assert.assertNotNull(response.body());
+    }
+
+
+    @Given("a logged-in user")
+    public void aLoggedInUser() {
+    }
+
+    @When("a user has a watchlist")
+    public void aUserHasAWatchlist() {
+    }
+
+    @Then("the list of stocks are displayed")
+    public void theListOfStocksAreDisplayed() {
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -70,4 +167,7 @@ public class StockStepDefinitions {
     public void theStockIsAddedToTheUserSWatchlist() {
         Assert.assertEquals(201, response.getStatusCode());
     }
+
+
+
 }
