@@ -1,8 +1,8 @@
 Feature: Rest API Functionalities
   Scenario: Successful User Login and Registration
     Given a registered user
-#    When User enters their email and password
-#    Then User logs in successfully
+    When User enters their email and password
+    Then User logs in successfully
 
 #    Scenario: User Can Search, Add, Delete A Stock from Their Watchlist
 #     Given a logged-in user

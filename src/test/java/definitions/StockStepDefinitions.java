@@ -79,7 +79,7 @@ public class StockStepDefinitions {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         JSONObject requestBody = new JSONObject();
-        requestBody.put("email", "email100@gmail.com");
+        requestBody.put("email", "email10@gmail.com");
         requestBody.put("password", "password100");
         request.header("Content-Type", "application/json");
         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/login");
