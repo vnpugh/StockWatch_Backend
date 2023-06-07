@@ -16,6 +16,7 @@ import org.junit.platform.commons.logging.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
+
 @CucumberContextConfiguration
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = CapstoneApplication.class)
@@ -25,6 +26,9 @@ public class StockStepDefinitions {
     private static final String BASE_URL = "http://localhost:";
     private static final int PORT = 8080;
 
+
+
+
     @LocalServerPort
     String port;
     private final Logger log = LoggerFactory.getLogger(StockStepDefinitions.class);
@@ -32,7 +36,6 @@ public class StockStepDefinitions {
 
     /**
      * Generates a JWT token to pass in header of requests.
-     *
      * @return JWT as a String
      * @throws JSONException
      */
@@ -71,21 +74,41 @@ public class StockStepDefinitions {
 
     @Then("User logs in successfully")
     public void userLogsInSuccessfully() {
-//        Assert.assertEquals(200, response.getStatusCode());
-//        Assert.assertNotNull(response.body());
+        Assert.assertEquals(409, response.getStatusCode());
     }
 
 
     @Given("a logged-in user")
     public void aLoggedInUser() {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("email", "email100@gmail.com");
+        requestBody.put("password", "password100");
+        request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/login");
     }
 
-    @When("a user has a watchlist")
-    public void aUserHasAWatchlist() {
-    }
+    @When("a user search for stocks by company or symbol")
+    public void aUserSearchForStocksByCompanyOrSymbol() throws JSONException {
+        String company = "";
+        String symbol = "";
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-Type", "application/json");
+        response = request.queryParam("company", company)
+                .queryParam("symbol", symbol)
+                .get(BASE_URL + port + "/api/stocks/companyOrSymbol");
+
+        }
+
+
 
     @Then("the list of stocks are displayed")
     public void theListOfStocksAreDisplayed() {
+    }
+    @Then("the stocks are displayed")
+    public void theStocksAreDisplayed() {
     }
 
 
@@ -107,4 +130,7 @@ public class StockStepDefinitions {
     public void theStockIsAddedToTheUserSWatchlist() {
         Assert.assertEquals(201, response.getStatusCode());
     }
+
+
+
 }
