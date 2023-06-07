@@ -29,8 +29,6 @@ public class StockStepDefinitions {
     private static final int PORT = 8080;
 
 
-
-
     @LocalServerPort
     String port;
     private final Logger log = LoggerFactory.getLogger(StockStepDefinitions.class);
@@ -38,6 +36,7 @@ public class StockStepDefinitions {
 
     /**
      * Generates a JWT token to pass in header of requests.
+     *
      * @return JWT as a String
      * @throws JSONException
      */
@@ -49,26 +48,31 @@ public class StockStepDefinitions {
 //        request.header("Content-Type", "application/json");
 //        response = request.body(jsonObject.toString()).post(BASE_URL + port + "/api/auth/users/login");
 //        return response.jsonPath().getString("token");
-//    }
+//   }
 
+
+    //    <------ User Can Register Test - DONE --->
     @Given("a new user")
     public void aNewUser() throws JSONException {
+    }
+
+    @When("User enters their first name, email and password")
+    public void userEntersTheirFirstNameEmailAndPassword() throws JSONException {
+
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         org.json.JSONObject requestBody = new org.json.JSONObject();
-        requestBody.put("firstName", "Jane");
-        requestBody.put("email", "email@email.com");
+        requestBody.put("firstName", "Test");
+        requestBody.put("email", "test@email.com");
         requestBody.put("password", "password");
         request.header("Content-Type", "application/json");
-        response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/users/register");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/register");
+
     }
-
-
-
-
-
-
-
+    @Then("User registration is successful")
+    public void userRegistrationIsSuccessful() {
+        Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+    }
 
 
 
@@ -112,6 +116,18 @@ public class StockStepDefinitions {
     public void userLogsInSuccessfully() {
         Assert.assertEquals(200, response.getStatusCode());
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     //    <------ User Can Search For Stocks Test --->

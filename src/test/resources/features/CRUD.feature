@@ -1,8 +1,8 @@
 Feature: Rest API Functionalities
-#  Scenario: Successful User Registration
-#      Given a new user
-#      When User enters their first name, email and password
-#      Then User logs in successfully
+  Scenario: Successful User Registration
+      Given a new user
+      When User enters their first name, email and password
+      Then User registration is successful
 
   Scenario: Successful User Login
       Given a registered user
