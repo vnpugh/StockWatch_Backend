@@ -3,9 +3,7 @@ Feature: Watchlist Management
 #  Background:
 #    Given a registered user
 #
-#  Scenario: Can successfully view all stocks
-#    When the user can view all stocks on their watchlist
-#    Then the API should return a list of stocks on the watchlist
+
 #
 #  Scenario: User can create a custom watchlist
 #    When the user requests to create a new watchlist

@@ -75,7 +75,7 @@ public class StockStepDefinitions {
 
     @Then("User logs in successfully")
     public void userLogsInSuccessfully() {
-        Assert.assertEquals(409, response.getStatusCode());
+        Assert.assertEquals(200, response.getStatusCode());
     }
 
 
@@ -91,8 +91,8 @@ public class StockStepDefinitions {
         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/login");
     }
 
-    @When("a user search for stocks by company or symbol")
-    public void aUserSearchForStocksByCompanyOrSymbol() throws JSONException {
+    @When("a user searches for stocks by company or symbol")
+    public void aUserSearchesForStocksByCompanyOrSymbol() {
         String company = "";
         String symbol = "";
         RestAssured.baseURI = BASE_URL;
@@ -100,34 +100,37 @@ public class StockStepDefinitions {
         request.header("Content-Type", "application/json");
         response = request.queryParam("company", company)
                 .queryParam("symbol", symbol)
-                .get(BASE_URL + port + "/api/stocks/companyOrSymbol");
-        }
-    @Then("the list of stocks are displayed")
-    public void theListOfStocksAreDisplayed() {
+                .get(BASE_URL + port + "/api/stocks/companyOrSymbol?company=&symbol=");
+    }
+
+    @Then("the stocks are displayed")
+    public void theStocksAreDisplayed() {
         Assert.assertEquals(200, response.getStatusCode());
     }
 
 
 
+
     //<-- User Can Add a Stock to Their WatchList -->
 
-    @When("the user adds a stock to their watchlist by symbol")
-    public void theUserAddsAStockToTheirWatchlistBySymbol() throws JSONException {
+
+    @When("a user adds a stock to their watchlist by symbol")
+    public void aUserAddsAStockToTheirWatchlistBySymbol() {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         JSONObject requestBody = new JSONObject();
         requestBody.put("symbol", "AAPL");
         request.header("Content-Type", "application/json");
         response = request.body(requestBody.toString())
-                .post(BASE_URL + port + "/api/watchlist/stocks/1");
+                .post(BASE_URL + port + "/api/watchlist/addStock?symbol=&watchlist_id=");
     }
 
-
-    @Then("the stock is added to the user's watchlist")
-    public void theStockIsAddedToTheUserSWatchlist() {
+    @Then("the stock is added to the user's watchlist successfully")
+    public void theStockIsAddedToTheUserSWatchlistSuccessfully() {
         Assert.assertEquals(201, response.getStatusCode());
     }
 
-
-
+    @When("a user deletes a stock from their watchlist by symbol")
+    public void aUserDeletesAStockFromTheirWatchlistBySymbol() {
+    }
 }
