@@ -51,28 +51,51 @@ public class StockStepDefinitions {
 //        return response.jsonPath().getString("token");
 //    }
 
-
-//    <------ User Can Login Test --->
-    @Given("a registered user")
-    public void aRegisteredUser(){
-        JSONObject requestBody = new JSONObject();
+    @Given("a new user")
+    public void aNewUser() throws JSONException {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        org.json.JSONObject requestBody = new org.json.JSONObject();
         requestBody.put("firstName", "Jane");
-        requestBody.put("email", "email10@gmail.com");
-        requestBody.put("password", "password100");
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> request = new HttpEntity<>(requestBody.toString(), headers);
-
-        ResponseEntity<String> response = new RestTemplate().exchange(
-                BASE_URL + port + "/api/auth/users/register",
-                HttpMethod.POST,
-                request,
-                String.class
-        );
-
-        Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+        requestBody.put("email", "email@email.com");
+        requestBody.put("password", "password");
+        request.header("Content-Type", "application/json");
+        response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/users/register");
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    <------ User Can Login Test - DONE --->
+    @Given("a registered user")
+    public void aRegisteredUser() {
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("firstName", "Jane");
+            requestBody.put("email", "email10@gmail.com");
+            requestBody.put("password", "password100");
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<String> request = new HttpEntity<>(requestBody.toString(), headers);
+
+            ResponseEntity<String> response = new RestTemplate().exchange(
+                    BASE_URL + port + "/api/auth/users/register",
+                    HttpMethod.POST,
+                    request,
+                    String.class
+            );
+
+            Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+        }
 
     @When("User enters their email and password")
     public void userEntersTheirEmailAndPassword() {
@@ -83,8 +106,8 @@ public class StockStepDefinitions {
         requestBody.put("password", "password100");
         request.header("Content-Type", "application/json");
         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/login");
-    }
 
+    }
     @Then("User logs in successfully")
     public void userLogsInSuccessfully() {
         Assert.assertEquals(200, response.getStatusCode());
@@ -94,13 +117,29 @@ public class StockStepDefinitions {
     //    <------ User Can Search For Stocks Test --->
     @Given("a logged-in user")
     public void aLoggedInUser() {
-        RestAssured.baseURI = BASE_URL;
-        RequestSpecification request = RestAssured.given();
+
         JSONObject requestBody = new JSONObject();
-        requestBody.put("email", "email100@gmail.com");
-        requestBody.put("password", "password100");
-        request.header("Content-Type", "application/json");
-        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/login");
+        requestBody.put("password", "123456");
+        requestBody.put("email", "test@mail.com");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request = new HttpEntity<String>(requestBody.toString(), headers);
+        ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL + port + "/auth/login/", HttpMethod.POST, request, String.class);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
+
+
+
+
+        // get JWT token from response body
+//        JSONObject responseBody = new JSONObject(response.getBody());
+//        authToken = responseBody.getString("message");
+//        RestAssured.baseURI = BASE_URL;
+//        RequestSpecification request = RestAssured.given();
+//        JSONObject requestBody = new JSONObject();
+//        requestBody.put("email", "email10@gmail.com");
+//        requestBody.put("password", "password100");
+//        request.header("Content-Type", "application/json");
+//        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/login");
     }
 
     @When("a user searches for stocks by company or symbol")
@@ -164,4 +203,12 @@ public class StockStepDefinitions {
 
 
     }
+
+
+
 }
+
+
+
+
+
