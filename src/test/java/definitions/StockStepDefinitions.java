@@ -50,6 +50,7 @@ public class StockStepDefinitions {
     }
 
 
+//    <------ User Can Register Test --->
     @Given("a registered user")
     public void aRegisteredUser() throws JSONException {
         RequestSpecification request = RestAssured.given();
@@ -78,6 +79,7 @@ public class StockStepDefinitions {
     }
 
 
+    //    <------ User Can Search For Stocks Test --->
     @Given("a logged-in user")
     public void aLoggedInUser() {
         RestAssured.baseURI = BASE_URL;
@@ -99,20 +101,15 @@ public class StockStepDefinitions {
         response = request.queryParam("company", company)
                 .queryParam("symbol", symbol)
                 .get(BASE_URL + port + "/api/stocks/companyOrSymbol");
-
         }
-
-
-
     @Then("the list of stocks are displayed")
     public void theListOfStocksAreDisplayed() {
-    }
-    @Then("the stocks are displayed")
-    public void theStocksAreDisplayed() {
+        Assert.assertEquals(200, response.getStatusCode());
     }
 
 
-    //<-- WatchList -->
+
+    //<-- User Can Add a Stock to Their WatchList -->
 
     @When("the user adds a stock to their watchlist by symbol")
     public void theUserAddsAStockToTheirWatchlistBySymbol() throws JSONException {

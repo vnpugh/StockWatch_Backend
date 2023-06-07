@@ -4,8 +4,7 @@ Feature: Rest API Functionalities
 #    When User enters their email and password
 #    Then User logs in successfully
 
-
     Scenario: User Can Search for Stocks
      Given a logged-in user
      When a user search for stocks by company or symbol
-#     Then the stocks are displayed
+     Then the stocks are displayed
