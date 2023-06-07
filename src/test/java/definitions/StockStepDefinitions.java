@@ -15,6 +15,8 @@ import org.junit.platform.commons.logging.Logger;
 import org.junit.platform.commons.logging.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.*;
+import org.springframework.web.client.RestTemplate;
 
 
 @CucumberContextConfiguration
@@ -39,27 +41,37 @@ public class StockStepDefinitions {
      * @return JWT as a String
      * @throws JSONException
      */
-    public String getJWT() throws JSONException {
-        RequestSpecification request = RestAssured.given();
-        org.json.JSONObject jsonObject = new org.json.JSONObject();
-        jsonObject.put("email", "email100@gmail.com");
-        jsonObject.put("password", "password100");
-        request.header("Content-Type", "application/json");
-        response = request.body(jsonObject.toString()).post(BASE_URL + port + "/api/auth/users/login");
-        return response.jsonPath().getString("token");
-    }
+//    public String getJWT() throws JSONException {
+//        RequestSpecification request = RestAssured.given();
+//        org.json.JSONObject jsonObject = new org.json.JSONObject();
+//        jsonObject.put("email", "email100@gmail.com");
+//        jsonObject.put("password", "password100");
+//        request.header("Content-Type", "application/json");
+//        response = request.body(jsonObject.toString()).post(BASE_URL + port + "/api/auth/users/login");
+//        return response.jsonPath().getString("token");
+//    }
 
 
-//    <------ User Can Register Test --->
+//    <------ User Can Login Test --->
     @Given("a registered user")
-    public void aRegisteredUser() throws JSONException {
-        RequestSpecification request = RestAssured.given();
+    public void aRegisteredUser(){
         JSONObject requestBody = new JSONObject();
-        requestBody.put("email", "email100@gmail.com");
+        requestBody.put("firstName", "Jane");
+        requestBody.put("email", "email10@gmail.com");
         requestBody.put("password", "password100");
-        request.header("Content-Type", "application/json");
-        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/register");
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request = new HttpEntity<>(requestBody.toString(), headers);
+
+        ResponseEntity<String> response = new RestTemplate().exchange(
+                BASE_URL + port + "/api/auth/users/register",
+                HttpMethod.POST,
+                request,
+                String.class
+        );
+
+        Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
     }
 
     @When("User enters their email and password")
@@ -130,7 +142,26 @@ public class StockStepDefinitions {
         Assert.assertEquals(201, response.getStatusCode());
     }
 
+
+
+
+    //<-- User Can Delete a Stock from Their WatchList -->
+
     @When("a user deletes a stock from their watchlist by symbol")
-    public void aUserDeletesAStockFromTheirWatchlistBySymbol() {
+    public void aUserDeletesAStockFromTheirWatchlistBySymbol() throws JSONException {
+//        RestAssured.baseURI = BASE_URL + port;
+//        RequestSpecification request = RestAssured.given();
+//        request.header("Authorization", "Bearer "+ getJWT());
+//        response = request.delete("/api/watchlist/deleteStock?symbol=&watchlist_id=");
+
+    }
+
+
+    @Then("the stock is deleted successfully")
+    public void theStockIsDeletedSuccessfully() {
+        Assert.assertEquals(204, response.getStatusCode());
+
+
+
     }
 }
