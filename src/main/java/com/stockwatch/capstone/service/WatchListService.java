@@ -124,9 +124,12 @@ public class WatchListService {
         User user = userService.getCurrentLoggedInUser();
         WatchList watchList = watchListRepository.findByWatchListIdAndUser(watchlistId, user);
         Stock stock = stockService.getStockBySymbol(symbol);
-        watchList.getStocks().remove(stock);
-        watchListRepository.save(watchList);
-
+        if (watchList != null) {
+            watchList.getStocks().remove(stock);
+            watchListRepository.save(watchList);
+        } else {
+            throw new WatchListNotFoundException("Watchlist not found");
+        }
         return watchList;
     }
 
