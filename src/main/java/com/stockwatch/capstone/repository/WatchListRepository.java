@@ -20,4 +20,5 @@ public interface WatchListRepository extends JpaRepository<WatchList, Long> {
     @Modifying
     @Query("UPDATE WatchList w SET w.listName = ?1 WHERE w.user.id = ?2 AND w.id=?3")
     Integer updateListNameByUser(String listName, Long userId, Long watchlistId);
+
 }

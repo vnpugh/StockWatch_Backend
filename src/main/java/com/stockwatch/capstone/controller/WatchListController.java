@@ -3,6 +3,8 @@ package com.stockwatch.capstone.controller;
 import com.stockwatch.capstone.models.Stock;
 import com.stockwatch.capstone.models.WatchList;
 import com.stockwatch.capstone.models.request.CreateWatchlistRequest;
+import com.stockwatch.capstone.models.request.StockWatchlistRequest;
+import com.stockwatch.capstone.models.response.WatchlistResponse;
 import com.stockwatch.capstone.repository.UserRepository;
 import com.stockwatch.capstone.service.WatchListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +35,9 @@ public class WatchListController {
      * @return a list of stocks on the watchlist
      */
     @GetMapping("/stocks")
-    public List<Stock> getAllStocksOnWatchList(@RequestParam(name = "id") Long id) {
-        return watchListService.getAllStocksOnWatchList(id);
+    public ResponseEntity<List<Stock>> getAllStocksOnWatchList(@RequestParam(name = "id") Long id) {
+        List<Stock> stocks = watchListService.getAllStocksOnWatchList(id);
+        return ResponseEntity.status(HttpStatus.OK).body(stocks);
     }
 
 
@@ -60,13 +63,13 @@ public class WatchListController {
      * POST: endpoint http://localhost:8080/api/watchlist/addStock?symbol=&watchlist_id=
      * Adds a stock to the user's watchlist by the specified symbol.
      *
-     * @param symbol the ticker symbol of the stock to add
+     * @param watchlistRequest the ticker symbol of the stock to add
      * @return the updated watchlist of the user
      */
-    @PostMapping(path = "/addStock")
-    public WatchList addStockToWatchList(@RequestParam String symbol, @RequestParam(name = "watchlist_id") Long watchlistId) {
-        WatchList watchList = watchListService.addStockToWatchlist(symbol, watchlistId);
-        return watchList;
+    @PostMapping(path = "/addStocks")
+    public ResponseEntity<WatchList> addStockToWatchList(@Valid @RequestBody StockWatchlistRequest watchlistRequest) {
+        WatchList watchList = watchListService.addStockToWatchlist(watchlistRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(watchList);
     }
 
     //**User can update the name of a watch list.
@@ -83,24 +86,28 @@ public class WatchListController {
     @PutMapping(path = "/modify")
     public ResponseEntity<WatchList> updateWatchListName(@RequestParam(name = "new_name") String newListName, @RequestParam(name = "watchlist_id") Long watchlistId) {
         WatchList watchList = watchListService.modifyWatchlist(watchlistId, newListName);
-        return ResponseEntity.status(HttpStatus.CREATED).body(watchList);
+        return ResponseEntity.status(HttpStatus.OK).body(watchList);
     }
 
 
 //**User can delete a stock from their watch list.
 
     /**
-     * METHOD: DELETE endpoint http://localhost:8080/api/watchlist/deleteStock?symbol=&watchlist_id=
+     * METHOD: POST endpoint http://localhost:8080/api/watchlist/deleteStocks
      * Delete a stock from the user's watchlist by symbol.
      *
-     * @param symbol The symbol of the stock to delete.
+     * @param watchlistRequest The request of the stock to delete.
      * @return List<WatchList> The updated watchlist after deleting the stock.
      */
-    @DeleteMapping(path = "/deleteStock")
-    public ResponseEntity<WatchList> deleteStockFromWatchList(@RequestParam String symbol, @RequestParam(name = "watchlist_id") Long watchlistId) {
-        WatchList watchList = watchListService.deleteStock(symbol, watchlistId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(watchList);
+    @PostMapping(path = "/deleteStocks")
+    public ResponseEntity<WatchList> deleteStockFromWatchList(@Valid @RequestBody StockWatchlistRequest watchlistRequest) {
+        WatchList watchList = watchListService.deleteStock(watchlistRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(watchList);
     }
 
-
+    @GetMapping
+    public ResponseEntity<List<WatchlistResponse>> getAllWatchList() {
+        List<WatchlistResponse> watchLists = watchListService.getAllWatchlists();
+        return ResponseEntity.status(HttpStatus.OK).body(watchLists);
+    }
 }

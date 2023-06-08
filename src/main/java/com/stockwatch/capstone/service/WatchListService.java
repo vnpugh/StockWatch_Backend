@@ -9,6 +9,8 @@ import com.stockwatch.capstone.models.Stock;
 import com.stockwatch.capstone.models.User;
 import com.stockwatch.capstone.models.WatchList;
 import com.stockwatch.capstone.models.request.CreateWatchlistRequest;
+import com.stockwatch.capstone.models.request.StockWatchlistRequest;
+import com.stockwatch.capstone.models.response.WatchlistResponse;
 import com.stockwatch.capstone.repository.StockRepository;
 import com.stockwatch.capstone.repository.UserRepository;
 import com.stockwatch.capstone.repository.WatchListRepository;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -51,27 +54,26 @@ public class WatchListService {
     /**
      * Add stock to watchlist
      *
-     * @param symbol
-     * @param watchlistId
+     * @param watchlistRequest
      * @return Updated watchlist
      */
-    public WatchList addStockToWatchlist(String symbol, Long watchlistId) throws InvalidInputException, StockNotFoundException {
-        Stock stock = stockService.getStockBySymbol(symbol);
-        if (stock == null) {
-            throw new StockNotFoundException("No stock exists for given symbol");
+    public WatchList addStockToWatchlist(StockWatchlistRequest watchlistRequest) throws InvalidInputException, StockNotFoundException {
+        List<Stock> stocks = stockRepository.findBySymbolIn(watchlistRequest.getStockSymbols());
+        if (stocks == null || stocks.size() == 0) {
+            throw new StockNotFoundException("No stock exists for given symbols");
         }
         User user = userService.getCurrentLoggedInUser();
         if (user == null) {
             throw new InvalidInputException("User not logged-in");
         }
-        WatchList watchList = watchListRepository.findByWatchListIdAndUser(watchlistId, user);
+        WatchList watchList = watchListRepository.findByWatchListIdAndUser(watchlistRequest.getWatchListId(), user);
 
         if (watchList != null) {
-            watchList.getStocks().add(stock);
+            watchList.getStocks().addAll(stocks);
             watchListRepository.save(watchList);
             return watchList;
         } else {
-            throw new InvalidInputException("Stock not found for symbol: " + symbol);
+            throw new InvalidInputException("Stock not found for symbols: " + watchlistRequest.getStockSymbols());
         }
     }
 
@@ -110,22 +112,24 @@ public class WatchListService {
             throw new InvalidInputException("User not logged-in");
         }
         WatchList watchlist = watchListRepository.findByWatchListIdAndUser(watchlistId, user);
+        if (watchlist == null) {
+            throw new WatchListNotFoundException("Watchlist not found");
+        }
         return watchlist.getStocks();
     }
 
     /**
      * Delete stock under watchlist by symbol.
      *
-     * @param symbol
-     * @param watchlistId
+     * @param watchlistRequest
      * @return Updated watchlist
      */
-    public WatchList deleteStock(String symbol, Long watchlistId) {//deletes stock from user watchlist
+    public WatchList deleteStock(StockWatchlistRequest watchlistRequest) {//deletes stock from user watchlist
         User user = userService.getCurrentLoggedInUser();
-        WatchList watchList = watchListRepository.findByWatchListIdAndUser(watchlistId, user);
-        Stock stock = stockService.getStockBySymbol(symbol);
+        WatchList watchList = watchListRepository.findByWatchListIdAndUser(watchlistRequest.getWatchListId(), user);
+        List<Stock> stocks = stockRepository.findBySymbolIn(watchlistRequest.getStockSymbols());
         if (watchList != null) {
-            watchList.getStocks().remove(stock);
+            watchList.getStocks().removeAll(stocks);
             watchListRepository.save(watchList);
         } else {
             throw new WatchListNotFoundException("Watchlist not found");
@@ -155,5 +159,25 @@ public class WatchListService {
         }
         watchList.setListName(newName);
         return watchListRepository.save(watchList);
+    }
+
+    /**
+     * Get all watch lists for user logged-in
+     *
+     * @return List of watch lists for user logged-in
+     */
+    public List<WatchlistResponse> getAllWatchlists() {
+        User user = userService.getCurrentLoggedInUser();
+        if (user == null) {
+            throw new InvalidInputException("User not logged-in");
+        }
+        List<WatchList> watchLists = watchListRepository.findByUser(user);
+        List<WatchlistResponse> watchlistResponses = new ArrayList<>(watchLists.size());
+        if (watchLists.size() > 0) {
+            watchLists.forEach(watchList -> {
+                watchlistResponses.add(new WatchlistResponse(watchList.getListName(), watchList.getWatchListId()));
+            });
+        }
+        return watchlistResponses;
     }
 }

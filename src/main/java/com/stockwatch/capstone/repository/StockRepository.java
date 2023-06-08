@@ -18,4 +18,6 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
     List<Stock> findByCompanyEqualsIgnoreCaseOrSymbolEqualsIgnoreCase(String companyQuery, String symbolQuery);
 
     List<Stock> findByStockIdIn(List<Integer> ids);
+
+    List<Stock> findBySymbolIn(List<String> stockSymbols);
 }
