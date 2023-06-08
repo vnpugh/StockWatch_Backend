@@ -15,7 +15,7 @@ Feature: Rest API Functionalities
     Then a new watchlist for the user is created successfully
 
 
-  Scenario: User Can Search, Add, And Delete A Stock 
+  Scenario: User Can Search, Add, And Delete A Stock
      Given a user searches for stocks by entering the company name or symbol
      When the stocks are displayed on the page
      Then user can add a stock to their watchlist successfully
