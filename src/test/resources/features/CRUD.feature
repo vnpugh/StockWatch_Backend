@@ -15,15 +15,12 @@ Feature: Rest API Functionalities
     Then a new watchlist for the user is created successfully
 
 
-  Scenario: User Can Search and Add A Stock to Their Watchlist
+  Scenario: User Can Search, Add, And Delete A Stock 
      Given a user searches for stocks by entering the company name or symbol
      When the stocks are displayed on the page
      Then user can add a stock to their watchlist successfully
-
-##     When a user adds a stock to their watchlist by symbol
-##     Then the stock is added to the user's watchlist successfully
-##     When a user deletes a stock from their watchlist by symbol
-##     Then the stock is deleted successfully
+     When a user deletes a stock from their watchlist
+     Then the stock is deleted successfully
 
 
 #    Scenario: User can update the name of a watchlist
