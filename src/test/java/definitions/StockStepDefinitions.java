@@ -11,12 +11,13 @@ import io.restassured.specification.RequestSpecification;
 import net.minidev.json.JSONObject;
 import org.json.JSONException;
 import org.junit.Assert;
-import org.junit.platform.commons.logging.Logger;
-import org.junit.platform.commons.logging.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import java.time.LocalDate;
 
 
 @CucumberContextConfiguration
@@ -26,13 +27,14 @@ public class StockStepDefinitions {
 
     private static Response response;
     private static final String BASE_URL = "http://localhost:";
-    private static final int PORT = 8080;
-
 
     @LocalServerPort
     String port;
-    private final Logger log = LoggerFactory.getLogger(StockStepDefinitions.class);
-    String JWT;
+//    private final Logger log = LoggerFactory.getLogger(StockStepDefinitions.class);
+
+    private String jwtToken;
+
+
 
     /**
      * Generates a JWT token to pass in header of requests.
@@ -40,15 +42,15 @@ public class StockStepDefinitions {
      * @return JWT as a String
      * @throws JSONException
      */
-//    public String getJWT() throws JSONException {
-//        RequestSpecification request = RestAssured.given();
-//        org.json.JSONObject jsonObject = new org.json.JSONObject();
-//        jsonObject.put("email", "email100@gmail.com");
-//        jsonObject.put("password", "password100");
-//        request.header("Content-Type", "application/json");
-//        response = request.body(jsonObject.toString()).post(BASE_URL + port + "/api/auth/users/login");
-//        return response.jsonPath().getString("token");
-//   }
+    public String jwtToken() throws JSONException {
+        RequestSpecification request = RestAssured.given();
+        org.json.JSONObject jsonObject = new org.json.JSONObject();
+        jsonObject.put("email", "email100@gmail.com");
+        jsonObject.put("password", "password100");
+        request.header("Content-Type", "application/json");
+        response = request.body(jsonObject.toString()).post(BASE_URL + port + "/api/auth/users/login");
+        return response.jsonPath().getString("token");
+    }
 
 
     //    <------ User Can Register Test - DONE --->
@@ -69,53 +71,103 @@ public class StockStepDefinitions {
         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/register");
 
     }
+
     @Then("User registration is successful")
     public void userRegistrationIsSuccessful() {
         Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
     }
 
 
-
-
-
-
-//    <------ User Can Login Test - DONE --->
+    //    <------ User Can Login Test - DONE --->
     @Given("a registered user")
     public void aRegisteredUser() {
-            JSONObject requestBody = new JSONObject();
-            requestBody.put("firstName", "Jane");
-            requestBody.put("email", "email10@gmail.com");
-            requestBody.put("password", "password100");
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("firstName", "Test1");
+        requestBody.put("email", "test1@email.com");
+        requestBody.put("password", "password1");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request = new HttpEntity<>(requestBody.toString(), headers);
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<String> request = new HttpEntity<>(requestBody.toString(), headers);
+        ResponseEntity<String> response = new RestTemplate().exchange(
+                BASE_URL + port + "/api/auth/users/register",
+                HttpMethod.POST,
+                request,
+                String.class
+        );
 
-            ResponseEntity<String> response = new RestTemplate().exchange(
-                    BASE_URL + port + "/api/auth/users/register",
-                    HttpMethod.POST,
-                    request,
-                    String.class
-            );
-
-            Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
-        }
+        Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());
+    }
 
     @When("User enters their email and password")
     public void userEntersTheirEmailAndPassword() {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         JSONObject requestBody = new JSONObject();
-        requestBody.put("email", "email10@gmail.com");
-        requestBody.put("password", "password100");
+        requestBody.put("email", "test1@email.com");
+        requestBody.put("password", "password1");
         request.header("Content-Type", "application/json");
         response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/login");
 
     }
+
     @Then("User logs in successfully")
     public void userLogsInSuccessfully() {
         Assert.assertEquals(200, response.getStatusCode());
     }
+
+
+
+
+    // <--- User can create a custom watchlist --->
+
+@Given("a user that is logged in")
+public void aUserThatIsLoggedIn() throws JSONException{
+        try {
+
+    RequestSpecification request = RestAssured.given();
+    request.header("Authorization", "Bearer " + jwtToken);
+    JSONObject responseJson = new JSONObject();
+    jwtToken = responseJson.toString();
+    Assert.assertNotNull(jwtToken);
+        } catch (
+    HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @When("the user creates a new watchlist")
+    public void theUserCreatesANewWatchlist()  {
+        RequestSpecification request = RestAssured.given();
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("listName", "My Watchlist");
+        requestBody.put("description", "My Watchlist Description");
+        requestBody.put("dateCreated", LocalDate.now().toString());
+        Response response = request.body(requestBody.toString())
+                .post(BASE_URL + port + "/api/watchlist/create");
+
+    }
+
+    @Then("a new watchlist for the user is created successfully")
+    public void aNewWatchlistForTheUserIsCreatedSuccessfully() {
+        Assert.assertNotNull(String.valueOf(response));
+    }
+
+
+
 
 
 
@@ -131,35 +183,9 @@ public class StockStepDefinitions {
 
 
     //    <------ User Can Search For Stocks Test --->
-    @Given("a logged-in user")
-    public void aLoggedInUser() {
 
-        JSONObject requestBody = new JSONObject();
-        requestBody.put("password", "123456");
-        requestBody.put("email", "test@mail.com");
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> request = new HttpEntity<String>(requestBody.toString(), headers);
-        ResponseEntity<String> response = new RestTemplate().exchange(BASE_URL + port + "/auth/login/", HttpMethod.POST, request, String.class);
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
-
-
-
-
-        // get JWT token from response body
-//        JSONObject responseBody = new JSONObject(response.getBody());
-//        authToken = responseBody.getString("message");
-//        RestAssured.baseURI = BASE_URL;
-//        RequestSpecification request = RestAssured.given();
-//        JSONObject requestBody = new JSONObject();
-//        requestBody.put("email", "email10@gmail.com");
-//        requestBody.put("password", "password100");
-//        request.header("Content-Type", "application/json");
-//        response = request.body(requestBody.toString()).post(BASE_URL + port + "/api/auth/users/login");
-    }
-
-    @When("a user searches for stocks by company or symbol")
-    public void aUserSearchesForStocksByCompanyOrSymbol() {
+    @Given("a user searches for stocks by entering the company name or symbol")
+    public void aUserSearchesForStocksByEnteringTheCompanyNameOrSymbol() {
         String company = "";
         String symbol = "";
         RestAssured.baseURI = BASE_URL;
@@ -168,21 +194,17 @@ public class StockStepDefinitions {
         response = request.queryParam("company", company)
                 .queryParam("symbol", symbol)
                 .get(BASE_URL + port + "/api/stocks/companyOrSymbol?company=&symbol=");
+
+
     }
 
-    @Then("the stocks are displayed")
-    public void theStocksAreDisplayed() {
-        Assert.assertEquals(200, response.getStatusCode());
+    @When("the stocks are displayed on the page")
+    public void theStocksAreDisplayedOnThePage() {
+        Assert.assertNotNull(response);
     }
 
-
-
-
-    //<-- User Can Add a Stock to Their WatchList -->
-
-
-    @When("a user adds a stock to their watchlist by symbol")
-    public void aUserAddsAStockToTheirWatchlistBySymbol() {
+    @Then("user can add a stock to their watchlist successfully")
+    public void userCanAddAStockToTheirWatchlistSuccessfully() {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         JSONObject requestBody = new JSONObject();
@@ -190,14 +212,28 @@ public class StockStepDefinitions {
         request.header("Content-Type", "application/json");
         response = request.body(requestBody.toString())
                 .post(BASE_URL + port + "/api/watchlist/addStock?symbol=&watchlist_id=");
+
+    }
+
+
+    //<-- User Can Add a Stock to Their WatchList -->
+
+
+    @When("a user adds a stock to their watchlist by symbol")
+    public void aUserAddsAStockToTheirWatchlistBySymbol() {
+//        RestAssured.baseURI = BASE_URL;
+//        RequestSpecification request = RestAssured.given();
+//        JSONObject requestBody = new JSONObject();
+//        requestBody.put("symbol", "AAPL");
+//        request.header("Content-Type", "application/json");
+//        response = request.body(requestBody.toString())
+//                .post(BASE_URL + port + "/api/watchlist/addStock?symbol=&watchlist_id=");
     }
 
     @Then("the stock is added to the user's watchlist successfully")
     public void theStockIsAddedToTheUserSWatchlistSuccessfully() {
         Assert.assertEquals(201, response.getStatusCode());
     }
-
-
 
 
     //<-- User Can Delete a Stock from Their WatchList -->
@@ -211,18 +247,23 @@ public class StockStepDefinitions {
 
     }
 
-
     @Then("the stock is deleted successfully")
     public void theStockIsDeletedSuccessfully() {
         Assert.assertEquals(204, response.getStatusCode());
-
-
 
     }
 
 
 
 }
+
+
+
+
+
+
+
+
 
 
 
