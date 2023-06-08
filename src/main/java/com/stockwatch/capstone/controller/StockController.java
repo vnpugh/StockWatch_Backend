@@ -34,13 +34,12 @@ public class StockController {
     /**
      * METHOD: GET endpoint: http://localhost:8080/api/stocks/companyOrSymbol?company=&symbol=
      *
-     * @param company
-     * @param symbol
+     * @param query
      * @return List of stocks filtered by either symbol or company.
      */
     @GetMapping("/companyOrSymbol")
-    public ResponseEntity<List<Stock>> searchStockByCompanyOrSymbol(@RequestParam(required = false, name = "company") String company, @RequestParam(required = false, name = "symbol") String symbol) {
-        List<Stock> searchResults = stockService.searchStockByCompanyOrSymbol(company, symbol);
+    public ResponseEntity<List<Stock>> searchStockByCompanyOrSymbol(@RequestParam String query, @RequestParam(required = false, name = "watchlist_id") Long watchlistId) {
+        List<Stock> searchResults = stockService.searchStockByCompanyOrSymbol(query, watchlistId);
         return ResponseEntity.ok(searchResults);
     }
 
