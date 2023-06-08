@@ -119,7 +119,7 @@ public class StockStepDefinitions {
 
 
 
-    // <--- User can create a custom watchlist --->
+    // <--- User can create a custom watchlist Test --->
 
 @Given("a user that is logged in")
 public void aUserThatIsLoggedIn() throws JSONException{
@@ -135,19 +135,6 @@ public void aUserThatIsLoggedIn() throws JSONException{
             e.printStackTrace();
         }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @When("the user creates a new watchlist")
     public void theUserCreatesANewWatchlist()  {
@@ -171,18 +158,7 @@ public void aUserThatIsLoggedIn() throws JSONException{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-    //    <------ User Can Search For Stocks Test --->
+    //    <------ User Can Search & Add A Stock Test --->
 
     @Given("a user searches for stocks by entering the company name or symbol")
     public void aUserSearchesForStocksByEnteringTheCompanyNameOrSymbol() {
@@ -194,7 +170,6 @@ public void aUserThatIsLoggedIn() throws JSONException{
         response = request.queryParam("company", company)
                 .queryParam("symbol", symbol)
                 .get(BASE_URL + port + "/api/stocks/companyOrSymbol?company=&symbol=");
-
 
     }
 
