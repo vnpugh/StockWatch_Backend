@@ -30,7 +30,6 @@ public class WatchListController {
     /**
      * GET: endpoint http://localhost:8080/api/watchlist/stocks?id=
      * Retrieves (view) all stocks on the user's watchlist.
-     *
      * @param id watchlist id
      * @return a list of stocks on the watchlist
      */
@@ -47,7 +46,6 @@ public class WatchListController {
      * POST: endpoint http://localhost:8080/api/watchlist/create
      * Create a new watchlist for the logged-in user.
      * The new watchlist is saved for the user (User Repository)
-     *
      * @return ResponseEntity<WatchList> The created watchlist with HTTP status 201 (Created).
      */
     @PostMapping(path = "/create")
