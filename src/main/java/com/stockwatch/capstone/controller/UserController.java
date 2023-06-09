@@ -25,7 +25,6 @@ public class UserController {
 
     /**
      * Sets the UserService instance for the current class.
-     *
      * @param userService The UserService instance to be set.
      */
     @Autowired
@@ -37,7 +36,6 @@ public class UserController {
     /**
      * POST: endpoint http://localhost:8080/api/auth/users/register
      * Registers a new user.
-     *
      * @param userRequest The User object containing the details of the user to be registered.
      * @return The registered User object.
      */
@@ -50,7 +48,6 @@ public class UserController {
     /**
      * POST: endpoint http://localhost:8080/api/auth/users/login
      * Handles the login request for a user.
-     *
      * @param loginRequest The login request object containing user credentials.
      * @return A ResponseEntity representing the HTTP response with the result of the login operation.
      */
@@ -77,7 +74,6 @@ public class UserController {
     /**
      * GET: http://localhost:8080/api/users
      * Retrieves the current user.
-     *
      * @return The User object representing the current user.
      */
     @GetMapping(path = "/users")
@@ -89,7 +85,6 @@ public class UserController {
     /**
      * PUT: http://localhost:8080/api/users
      * Updates the details of the current user.
-     *
      * @param updateUserRequest The User object containing the updated details of the user.
      * @return The updated User object representing the current user.
      */
@@ -102,7 +97,6 @@ public class UserController {
     /**
      * DELETE: http://localhost:8080/api/users
      * Deletes the current user.
-     *
      * @return A ResponseEntity representing the HTTP response with the result of the deletion operation.
      */
 
