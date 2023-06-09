@@ -64,33 +64,33 @@ public class StocksDataLoader implements CommandLineRunner {
     private void loadStocksData() {
         System.out.println("Calling StocksDataLoader");
 
-        BigDecimal marketCap1 = new BigDecimal("2.19E15");
+        BigDecimal marketCap1 = new BigDecimal("2.19E12");
         BigDecimal marketCap2 = new BigDecimal("1.85E12");
         BigDecimal marketCap3 = new BigDecimal("1.98E12");
-        BigDecimal marketCap4 = new BigDecimal("6.71E11");
-        BigDecimal marketCap5 = new BigDecimal("1.38E11");
-        BigDecimal marketCap6 = new BigDecimal("4.88E11");
-        BigDecimal marketCap7 = new BigDecimal("4.46E10");
-        BigDecimal marketCap8 = new BigDecimal("3.58E10");
-        BigDecimal marketCap9 = new BigDecimal("3.82E11");
-        BigDecimal marketCap10 = new BigDecimal("9.0E11");
-        BigDecimal marketCap11 = new BigDecimal("1.51E11");
-        BigDecimal marketCap12 = new BigDecimal("1.85E11");
-        BigDecimal marketCap13 = new BigDecimal("5.05E10");
-        BigDecimal marketCap14 = new BigDecimal("2.04E11");
-        BigDecimal marketCap15 = new BigDecimal("113.E09");
+        BigDecimal marketCap4 = new BigDecimal("6.71E12");
+        BigDecimal marketCap5 = new BigDecimal("1.38E12");
+        BigDecimal marketCap6 = new BigDecimal("4.88E12");
+        BigDecimal marketCap7 = new BigDecimal("4.46E12");
+        BigDecimal marketCap8 = new BigDecimal("3.58E12");
+        BigDecimal marketCap9 = new BigDecimal("3.82E12");
+        BigDecimal marketCap10 = new BigDecimal("9.0E12");
+        BigDecimal marketCap11 = new BigDecimal("1.5E12");
+        BigDecimal marketCap12 = new BigDecimal("1.8E12");
+        BigDecimal marketCap13 = new BigDecimal("5.0E12");
+        BigDecimal marketCap14 = new BigDecimal("2.64E2");
+        BigDecimal marketCap15 = new BigDecimal("113.E12");
 
 
 
         Stock stock1 = new Stock(101, "CVS Health Corporation", "CVS", 71.75, 2.14, 5.2, marketCap1);
         stockRepository.save(stock1);
-        Stock stock2 = new Stock(102, "Alphabet Inc.", "GOOGL", 150.20, 5.20, 4.1, marketCap2);
+        Stock stock2 = new Stock(102, "Alphabet Inc.", "GOOGL", 150.26, 5.22, 4.1, marketCap2);
         stockRepository.save(stock2);
-        Stock stock3 = new Stock(103, "Microsoft Corporation", "MSFT", 300.60, 1.26, 4.2, marketCap3);
+        Stock stock3 = new Stock(103, "Microsoft Corporation", "MSFT", 300.62, 1.26, 4.2, marketCap3);
         stockRepository.save(stock3);
-        Stock stock4 = new Stock(104, "Berkshire Hathaway", "BRKA", 421.50, 3.40, 4.3, marketCap4);
+        Stock stock4 = new Stock(104, "Berkshire Hathaway", "BRKA", 421.59, 3.43, 4.3, marketCap4);
         stockRepository.save(stock4);
-        Stock stock5 = new Stock(105, "Target Corporation", "TGT", 230.10, 2.53, 4.6, marketCap5);
+        Stock stock5 = new Stock(105, "Target Corporation", "TGT", 230.13, 2.53, 4.6, marketCap5);
         stockRepository.save(stock5);
         Stock stock6 = new Stock(106, "Walmart Inc.", "WMT", 140.36, 1.87, 4.1, marketCap6);
         stockRepository.save(stock6);
@@ -100,7 +100,7 @@ public class StocksDataLoader implements CommandLineRunner {
         stockRepository.save(stock8);
         Stock stock9 = new Stock(109, "Netflix Inc.", "NFLX", 500.09, 5.73, 4.2, marketCap9);
         stockRepository.save(stock9);
-        Stock stock10 = new Stock(110, "Facebook Inc.", "FB", 330.20, 3.91, 4.3, marketCap10);
+        Stock stock10 = new Stock(110, "Facebook Inc.", "FB", 330.25, 3.91, 4.3, marketCap10);
         stockRepository.save(stock10);
         Stock stock11 = new Stock(111, "Nano Labs Ltd", "NA", 2.72, 1.35, 4.7, marketCap11);
         stockRepository.save(stock11);

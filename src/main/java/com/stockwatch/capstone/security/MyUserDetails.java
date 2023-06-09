@@ -15,11 +15,15 @@ public class MyUserDetails implements UserDetails {
      */
 
     private final User user;
+    private String email;
 
     public MyUserDetails(User user) {
         this.user = user;
     }
 
+    public String getEmail() {
+        return this.email;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
