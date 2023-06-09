@@ -1,11 +1,11 @@
-# StockWatch - Spring Boot API
+# StockWatch - Spring Boot API:chart:
 <h1>Introduction</h1>
 As a beginner or novice investor, it’s important to make informed financial decisions. StockWatch is designed to simplify the complexities of the stock market.  Gain valuable insights, set personalized alerts, and track your favorite stocks with ease. With StockWatch, you can confidently make sound purchases when the time comes to invest in your first stock.
 <h1>Project Overview</h1>
 The Stockwatch API application is designed to provide backend functionality without the need for full CRUD operations and authentication. It utilizes Java RestAPI to handle the persistence of three models, allowing the API endpoints to perform CRUD tasks based on specific business use cases. In addition, the application includes a frontend built with Angular that communicates with the Spring Boot backend API, creating a comprehensive solution for managing stock-related data. To check out the frontend UI and repository, <a href="https://github.com/vnpugh/StockWatch_Frontend">click here.</a>
 <h2>Running the Application</h2>
 To get started, first clone the repository. Next, open the application in your Java IDE. 
-<h1>The Planning Process</h1>
+<h1>The Planning Process:memo:</h1>
 <p>Given the time constraints to complete this project, it was neccessary to define the project objectives and requirements early on.
 Utilizing GitHub Projects to create a road map was helpful and served as a visual representation of the project's progress and milestones. This
 helped me to break down the development tasks into smaller, manageable units. Please take a look at my Github Projects Board <a href="https://github.com/users/vnpugh/projects/5/views/1?layout=board">HERE.</a>
@@ -30,7 +30,7 @@ helped me to break down the development tasks into smaller, manageable units. Pl
 <li>Java (Programming Language)</li>
 <li>Maven (Dependency Management)</li>
 </ul>
-<h2>User Stories (MVP)</h2>
+<h2>User Stories (MVP):busts_in_silhouette:</h2>
 <ul>
 <li>As a user, I want to be able to register for a new account, so that I can create a custom watchlist and access personalized features.</li>
 <li>As a user, I want to be able to log in to my account, so that I can securely view and manage my watchlist.</li>
@@ -96,7 +96,7 @@ helped me to break down the development tasks into smaller, manageable units. Pl
 
 </tbody>
 </table>
-<h1>Resources & Documentation Used</h1>
+<h1>Resources & Documentation Used⛑️</h1>
 <ul>
 <li>Creating Forms and Styling in Angular: <a href="https://material.angular.io/">Angular Material</a></li>
   <li>Health Indicators in Spring Boot: <a href="https://www.baeldung.com/spring-boot-health-indicators">Baeldung</a></li>
