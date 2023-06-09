@@ -6,7 +6,10 @@ The Stockwatch API application is designed to provide backend functionality with
 <h2>Running the Application</h2>
 To get started, first clone the repository. Next, open the application in your Java IDE. 
 <h1>The Planning Process</h1>
-Project Planning Link
+<p>Given the time constraints to complete this project, it was neccessary to define the project objectives and requirements early on.
+Utilizing GitHub Projects to create a road map was helpful and served as a visual representation of the project's progress and milestones. This
+helped me to break down the development tasks into smaller, manageable units. Please take a look at my Github Projects Board <a href="https://github.com/users/vnpugh/projects/5/views/1?layout=board">HERE.</a>
+</p>
 <h2>ERD Diagram</h2>
 <center><img align="center" width="500" height="400" src="assets/erd.png" alt="api"></center>
 <h2>Tools & Technologies Used</h2>
