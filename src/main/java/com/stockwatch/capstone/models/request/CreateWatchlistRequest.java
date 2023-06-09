@@ -4,45 +4,48 @@ import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Represents a request to create a watchlist.
+ * Implements the Serializable interface to support serialization.
+ */
 public class CreateWatchlistRequest implements Serializable {
 
+    /**
+     * The name of the watchlist.
+     */
     @NotEmpty(message = "Name cannot be empty")
     private String listName;
 
+    /**
+     * The description of the watchlist.
+     */
     private String description;
 
+    /**
+     * The IDs of the stocks to be included in the watchlist.
+     */
     private List<Integer> stockIds;
 
-    @Override
-    public String toString() {
-        return "CreateWatchlistRequest{" +
-                "listName='" + listName + '\'' +
-                ", description='" + description + '\'' +
-                ", stocks=" + stockIds +
-                '}';
-    }
-
+    /**
+     * Returns the name of the watchlist.
+     * @return The name of the watchlist.
+     */
     public String getListName() {
         return listName;
     }
 
-    public void setListName(String listName) {
-        this.listName = listName;
-    }
-
+    /**
+     * Returns the description of the watchlist.
+     * @return The description of the watchlist.
+     */
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
+    /**
+     * Returns the IDs of the stocks in the watchlist.
+     * @return The IDs of the stocks in the watchlist.
+     */
     public List<Integer> getStockIds() {
         return stockIds;
-    }
-
-    public void setStockIds(List<Integer> stockIds) {
-        this.stockIds = stockIds;
-    }
-}
+    } }

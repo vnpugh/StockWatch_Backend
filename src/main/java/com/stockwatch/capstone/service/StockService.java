@@ -36,10 +36,15 @@ public class StockService {
     }
 
     /**
-     * Search stocks by symbol or company
-     *
-     * @param query
-     * @return List of stocks matching the query
+     * Searches for stocks by company name or symbol.
+     * If both query and watchlistId are null or empty, it returns all stocks.
+     * If only query is provided, it searches stocks by company name or symbol.
+     * If watchlistId is provided, it searches stocks within the specified watchlist.
+     * @param query The search query for company name or symbol.
+     * @param watchlistId The ID of the watchlist to search within.
+     * @return The list of matching stocks.
+     * @throws InvalidInputException If the user is not logged in.
+     * @throws WatchListNotFoundException If the specified watchlist is not found.
      */
     public List<Stock> searchStockByCompanyOrSymbol(String query, Long watchlistId) {
         if ((query == null || query.length() == 0) && watchlistId == null) {
@@ -66,8 +71,7 @@ public class StockService {
     }
 
     /**
-     * Get list af all stocks in the system.
-     *
+     * Get list af all stocks in the data.
      * @return
      */
     public List<Stock> getAllStocks() {

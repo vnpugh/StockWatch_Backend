@@ -36,7 +36,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
      * if the String has length/not null and starts with correct "Bearer"
      * returns substring that is only key and has Bearer removed.
      * returns String token key
-     *
      * @param request the HTTP request
      * @return the JWT token extracted from the request, or null if not found
      */
@@ -52,7 +51,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
      * @param request     the HTTP request
      * @param response    the HTTP response
      * @param filterChain the filter chain for invoking the next filter
-     *                    filters HTTP request using FilterChain object, parses the JWT from the request, then loads the UserProfile with username and authentication details and authenticates the user if a valid JWT token is present.
+     * filters HTTP request using FilterChain object, parses the JWT from the request,
+     * then loads the UserProfile with username and authentication details and authenticates
+     * the user if a valid JWT token is present.
      * @throws ServletException if an error occurs during the servlet handling
      * @throws IOException      if an I/O error occurs during the servlet handling
      */

@@ -39,7 +39,6 @@ public class UserService {
 
     /**
      * Finds a user by their email.
-     *
      * @param email the email of the user to find
      * @return the User object corresponding to the provided email
      */
@@ -50,7 +49,6 @@ public class UserService {
 
     /**
      * To Login user and generate JWT token.
-     *
      * @param loginRequest
      * @return LoginResponse
      */
@@ -72,7 +70,6 @@ public class UserService {
 
     /**
      * Creates a new user.
-     *
      * @param userObject The User object containing the details of the user to be created.
      * @return The created User object.
      * @throws InformationExistException if a user with the same email address already exists.
@@ -93,7 +90,6 @@ public class UserService {
 
     /**
      * Get current logged-in user for whom jwt is valid.
-     *
      * @return User logged-in
      */
     public User getCurrentLoggedInUser() {
@@ -105,7 +101,6 @@ public class UserService {
 
     /**
      * Update info of logged-in user
-     *
      * @param updateUserRequest
      * @return Updated user
      * @throws InformationNotFoundException
@@ -123,6 +118,10 @@ public class UserService {
         }
     }
 
+    /**
+     * Deletes the currently logged-in user.
+     * @return A ResponseEntity with a status of NO_CONTENT to indicate successful deletion.
+     */
     public ResponseEntity<?> deleteCurrentUser() {
         User user = getCurrentLoggedInUser();
         userRepository.delete(user);

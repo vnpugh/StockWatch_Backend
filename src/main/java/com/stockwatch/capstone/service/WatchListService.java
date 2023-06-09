@@ -52,10 +52,11 @@ public class WatchListService {
     }
 
     /**
-     * Add stock to watchlist
-     *
-     * @param watchlistRequest
-     * @return Updated watchlist
+     * Adds stocks to a watchlist based on the provided request.
+     * @param watchlistRequest The request containing stock symbols and watchlist ID.
+     * @return The updated watchlist after adding the stocks.
+     * @throws InvalidInputException   If the user is not logged in.
+     * @throws StockNotFoundException If no stocks exist for the given symbols.
      */
     public WatchList addStockToWatchlist(StockWatchlistRequest watchlistRequest) throws InvalidInputException, StockNotFoundException {
         List<Stock> stocks = stockRepository.findBySymbolIn(watchlistRequest.getStockSymbols());
@@ -78,10 +79,10 @@ public class WatchListService {
     }
 
     /**
-     * Created watchlist
-     *
-     * @param createWatchlistRequest
-     * @return Custom created watchlist
+     * Creates a new watchlist based on the provided request.
+     * @param createWatchlistRequest The request containing watchlist details and associated stock IDs.
+     * @return The created watchlist.
+     * @throws WatchlistAlreadyExistsException If a watchlist with the same name already exists.
      */
     public WatchList createWatchlist(CreateWatchlistRequest createWatchlistRequest) {
         User user = userService.getCurrentLoggedInUser();
@@ -101,10 +102,11 @@ public class WatchListService {
     }
 
     /**
-     * Get all stocks by watchlist id
-     *
-     * @param watchlistId
-     * @return List of stocks under watchlist
+     * Retrieves all stocks associated with the specified watchlist.
+     * @param watchlistId The ID of the watchlist.
+     * @return A list of stocks on the watchlist.
+     * @throws InvalidInputException If the user is not logged in.
+     * @throws WatchListNotFoundException If the specified watchlist is not found.
      */
     public List<Stock> getAllStocksOnWatchList(Long watchlistId) {
         User user = userService.getCurrentLoggedInUser();
@@ -119,10 +121,10 @@ public class WatchListService {
     }
 
     /**
-     * Delete stock under watchlist by symbol.
-     *
-     * @param watchlistRequest
-     * @return Updated watchlist
+     * Deletes the specified stocks from the user's watchlist.
+     * @param watchlistRequest The request containing the watchlist ID and stock symbols to delete.
+     * @return The updated watchlist after removing the stocks.
+     * @throws WatchListNotFoundException If the specified watchlist is not found.
      */
     public WatchList deleteStock(StockWatchlistRequest watchlistRequest) {//deletes stock from user watchlist
         User user = userService.getCurrentLoggedInUser();
@@ -138,11 +140,13 @@ public class WatchListService {
     }
 
     /**
-     * Modify watchlist name.
-     *
-     * @param watchlistId
-     * @param newName
-     * @return Modified watchlist.
+     * Modifies the name of a watchlist.
+     * @param watchlistId The ID of the watchlist to modify.
+     * @param newName The new name for the watchlist.
+     * @return The updated watchlist after modifying the name.
+     * @throws InvalidInputException If the user is not logged in, the new name is null or empty,
+     * or the new name already matches the existing list name.
+     * @throws WatchListNotFoundException If the specified watchlist is not found.
      */
     public WatchList modifyWatchlist(Long watchlistId, String newName) {
         User user = userService.getCurrentLoggedInUser();
@@ -162,9 +166,9 @@ public class WatchListService {
     }
 
     /**
-     * Get all watch lists for user logged-in
-     *
-     * @return List of watch lists for user logged-in
+     * Retrieves all watchlists associated with the currently logged-in user.
+     * @return A list of watchlist responses containing the names and IDs of the watchlists.
+     * @throws InvalidInputException If the user is not logged in.
      */
     public List<WatchlistResponse> getAllWatchlists() {
         User user = userService.getCurrentLoggedInUser();

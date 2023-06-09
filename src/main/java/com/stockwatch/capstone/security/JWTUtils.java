@@ -21,7 +21,8 @@ public class JWTUtils {
     private int jwtExpirationMs;
 
     /**
-     * @param user sets JWT subject from UserDetails, sets the issuedAt and expirationAt for JWT, creates JWT signature with jwtSecret to verify authenticity.
+     * @param user sets JWT subject from UserDetails, sets the issuedAt and expirationAt for JWT,
+     * creates JWT signature with jwtSecret to verify authenticity.
      * @return a String representation of JWT using compact(), known as a 'token'
      */
     public String generateJwtToken(UserDetails user) {
@@ -35,7 +36,8 @@ public class JWTUtils {
 
     /**
      * @param token, String representation of JWT
-     *               uses jwtSecret key to confirm signature, calls build method to parse data from String such as payload and then the subject(username)
+     * uses jwtSecret key to confirm signature, calls build method to parse data
+     * from String such as payload and then the subject(username)
      * @return JWT subject, username, as a String.
      */
     public String getUserNameFromJwtToken(String token) {
@@ -44,7 +46,8 @@ public class JWTUtils {
 
     /**
      * @param authToken uses jwtSecret key to confirm signature, then parses the claims/payload
-     * @return true if token has valid signature and payload, indicates JWT is valid. If neither is true, responds with specific exception error
+     * @return true if token has valid signature and payload, indicates JWT is valid.
+     * If neither is true, responds with specific exception error
      */
     public boolean validateJwtToken(String authToken) {
         try {

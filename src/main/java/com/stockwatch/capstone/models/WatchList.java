@@ -37,17 +37,12 @@ public class WatchList {
     private List<Stock> stocks;
 
 
-//    @OneToMany
-//    private List<Stock> stocks;
-
-
     public WatchList(Long watchListId, String listName, LocalDate dateCreated, String description) {
         this.watchListId = watchListId;
         this.listName = listName;
         this.dateCreated = dateCreated;
         this.description = description;
     }
-
 
     public WatchList() {
         this.stocks = new ArrayList<>();
@@ -66,10 +61,6 @@ public class WatchList {
         return watchListId;
     }
 
-    public void setWatchListId(Long watchListId) {
-        this.watchListId = watchListId;
-    }
-
     public String getListName() {
         return listName;
     }
@@ -78,20 +69,8 @@ public class WatchList {
         this.listName = listName;
     }
 
-    public void setListName() {
-        this.listName = listName;
-    }
-
-    public LocalDate getDateCreated() {
-        return dateCreated;
-    }
-
     public void setDateCreated(LocalDate dateCreated) {
         this.dateCreated = dateCreated;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public void setDescription(String description) {
@@ -118,6 +97,4 @@ public class WatchList {
                 '}';
     }
 
-    public void add(WatchList watchList) {
-    }
 }

@@ -13,15 +13,12 @@ public class MyUserDetailsService implements UserDetailsService {
 
     /**
      * Sets the UserService dependency.
-     *
      * @param userRepository the userRepository instance to be injected
      */
     @Autowired
     private UserRepository userRepository;
 
     /**
-     * Loads a user by the given email and returns UserDetails.
-     *
      * @param email the email of the user to load
      * @return the UserDetails of the loaded user
      * @throws UsernameNotFoundException if the user with the given email is not found

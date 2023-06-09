@@ -25,14 +25,13 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+
 public class SecurityConfiguration {
 
     private MyUserDetailsService myUserDetailsService;
 
     /**
      * Sets the MyUserDetailsService dependency.
-     *
      * @param myUserDetailsService the MyUserDetailsService instance to be injected
      */
     @Autowired
@@ -42,7 +41,6 @@ public class SecurityConfiguration {
 
     /**
      * Creates and returns an instance of JwtRequestFilter
-     *
      * @return the JwtRequestFilter instance
      */
     @Bean
@@ -52,7 +50,6 @@ public class SecurityConfiguration {
 
     /**
      * Creates and returns an instance of BCryptPasswordEncoder
-     *
      * @return the BCryptPasswordEncoder instance
      *
      */
@@ -63,7 +60,6 @@ public class SecurityConfiguration {
 
     /**
      * Configures the security filter chain.
-     *
      * @param http the HTTPSecurity instance to configure
      * @return the configured SecurityFilterChain
      * @throws Exception if an error occurs during configuratoin
@@ -84,7 +80,6 @@ public class SecurityConfiguration {
 
     /**
      * Creates and returns an instance of AuthenticationManager
-     *
      * @param authConfig the AuthenticationConfiguration instance
      * @return the AuthenticationManager instance
      * @throws Exception if an error occurs during creation
@@ -96,7 +91,6 @@ public class SecurityConfiguration {
 
     /**
      * Creates and returns an instance of DaoAuthenticationProvier
-     *
      * @return the DaoAuthenticationProvider instance
      */
     @Bean
@@ -109,7 +103,6 @@ public class SecurityConfiguration {
 
     /**
      * Creates and returns an instance of MyUserDetails within scoped proxy mode.
-     *
      * @return the MyUserDetails instance
      */
 
@@ -120,6 +113,10 @@ public class SecurityConfiguration {
                 .getPrincipal();
     }
 
+    /**
+     * Configures CORS (Cross-Origin Resource Sharing) for the application.
+     * @return The configured CORS configuration source.
+     */
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

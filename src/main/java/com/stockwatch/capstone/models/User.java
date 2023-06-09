@@ -7,7 +7,6 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -95,25 +94,6 @@ public class User {
                 ", password='" + password + '\'' +
                 '}';
     }
-
-    public void addWatchList(WatchList newWatchList) {
-        if (watchList == null) {
-            watchList = new ArrayList<>();
-        }
-        watchList.add(newWatchList);
-    }
-
-
-    public WatchList findWatchListByWatchListId(Long watchListId) {
-        for (WatchList watchList : watchList) {
-            if (watchList.getWatchListId().equals(watchListId)) {
-                return watchList;
-            }
-        }
-        return null;
-    }
-
-
     public void setWatchLists(List<WatchList> watchLists) {
         this.watchList = watchLists;
     }
