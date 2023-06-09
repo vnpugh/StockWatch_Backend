@@ -4,7 +4,20 @@ As a beginner or novice investor, it’s important to make informed financial de
 <h1>Project Overview</h1>
 The Stockwatch API application is designed to provide backend functionality without the need for full CRUD operations and authentication. It utilizes Java RestAPI to handle the persistence of three models, allowing the API endpoints to perform CRUD tasks based on specific business use cases. In addition, the application includes a frontend built with Angular that communicates with the Spring Boot backend API, creating a comprehensive solution for managing stock-related data. To check out the frontend UI and repository, <a href="https://github.com/vnpugh/StockWatch_Frontend">click here.</a>
 <h2>Running the Application</h2>
-To get started, first clone the repository. Next, open the application in your Java IDE. 
+To get started, first clone the repository. Next, open the application in your Java IDE.
+<h3>Dependencies</h3>
+
+<ul>
+
+  <li>Cucumber</li>
+  <li>io.rest-assured v. 4.3.0</li>
+  <li>jsonwebtoken</li>
+ <li>Spring Boot Framework</li>
+<li>H2 Database Engine</li>
+<li>junit</li>
+<li>Cross-Origin Resource Sharing (CORS)</li>
+</ul>
+
 <h1>The Planning Process:memo:</h1>
 <p>Given the time constraints to complete this project, it was neccessary to define the project objectives and requirements early on.
 Utilizing GitHub Projects to create a road map was helpful and served as a visual representation of the project's progress and milestones. This
