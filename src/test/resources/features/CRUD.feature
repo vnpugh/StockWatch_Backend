@@ -23,8 +23,3 @@ Feature: Rest API Functionalities
      Then the stock is deleted successfully
 
 
-#    Scenario: User can update the name of a watchlist
-#    Given the user has a watchlist with ID "1"
-#    When the user requests to update the name of the watchlist with the new name "My New Watchlist"
-#    Then the API should update the name of the watchlist and return it with HTTP status 200
-

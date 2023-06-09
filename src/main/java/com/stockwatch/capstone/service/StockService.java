@@ -28,7 +28,6 @@ public class StockService {
 
     /**
      * Filter stock by symbol
-     *
      * @param symbol
      * @return Stock that matches symbol.
      */

@@ -62,7 +62,6 @@ public class WatchListController {
     /**
      * POST: endpoint http://localhost:8080/api/watchlist/addStock?symbol=&watchlist_id=
      * Adds a stock to the user's watchlist by the specified symbol.
-     *
      * @param watchlistRequest the ticker symbol of the stock to add
      * @return the updated watchlist of the user
      */
@@ -77,7 +76,6 @@ public class WatchListController {
     /**
      * PUT: endpoint http://localhost:8080/api/watchlist/modify?new_name=&watchlist_id=
      * Update the name of a watchlist for the logged-in user.
-     *
      * @param watchlistId The ID of the watchlist to update.
      * @param newListName The new name for the watchlist.
      * @return ResponseEntity<WatchList> The updated watchlist with HTTP status 200 (OK).
@@ -95,7 +93,6 @@ public class WatchListController {
     /**
      * METHOD: POST endpoint http://localhost:8080/api/watchlist/deleteStocks
      * Delete a stock from the user's watchlist by symbol.
-     *
      * @param watchlistRequest The request of the stock to delete.
      * @return List<WatchList> The updated watchlist after deleting the stock.
      */
@@ -105,9 +102,16 @@ public class WatchListController {
         return ResponseEntity.status(HttpStatus.OK).body(watchList);
     }
 
+    /**
+     * Retrieves all watchlists.
+     * This endpoint returns a list of all watchlists in the system.
+     * @return ResponseEntity containing a list of WatchlistResponse objects
+     * @see WatchlistResponse
+     */
     @GetMapping
     public ResponseEntity<List<WatchlistResponse>> getAllWatchList() {
         List<WatchlistResponse> watchLists = watchListService.getAllWatchlists();
         return ResponseEntity.status(HttpStatus.OK).body(watchLists);
     }
+
 }
