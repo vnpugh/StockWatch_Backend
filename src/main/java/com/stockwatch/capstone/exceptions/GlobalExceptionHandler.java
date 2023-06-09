@@ -17,6 +17,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+
+/**
+ * Handles various runtime exceptions and returns a ResponseEntity with error details.
+ * @param ex the runtime exception
+ * @return a ResponseEntity containing the error details
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {InformationExistException.class, InformationNotFoundException.class, InvalidInputException.class, StockNotFoundException.class, WatchlistAlreadyExistsException.class, WatchListNotFoundException.class, RuntimeException.class})
@@ -27,6 +33,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 
+    /**
+     * Handles MethodArgumentNotValidException and returns a ResponseEntity with error details.
+     * @param ex      the MethodArgumentNotValidException
+     * @param headers the headers for the response
+     * @param status  the HTTP status code for the response
+     * @param request the current web request
+     * @return a ResponseEntity containing the error details
+     */
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers,
                                                                   HttpStatus status, WebRequest request) {
         Map<String, List<String>> body = new HashMap<>();
