@@ -108,10 +108,10 @@ public class StocksDataLoader implements CommandLineRunner {
         stockRepository.save(stock12);
         Stock stock13 = new Stock(113, "Wayfair Inc.", "W", 52.95, 7.24, 3.8, marketCap13);
         stockRepository.save(stock13);
-        Stock stock14 = new Stock(114, "Dutch Bros, Inc.", "BROS", 52.95, 10.58, 3.8, marketCap13);
+        Stock stock14 = new Stock(114, "Dutch Bros, Inc.", "BROS", 52.95, 10.58, 3.8, marketCap14);
         stockRepository.save(stock14);
-        Stock stock15 = new Stock(115, "Starbucks", "SBUX", 99.15, 1.28, 3.9, marketCap14);
-        stockRepository.save(stock13);
+        Stock stock15 = new Stock(115, "Starbucks", "SBUX", 99.15, 1.28, 3.9, marketCap15);
+        stockRepository.save(stock15);
 
 
         User user = new User("Jane", "email100@gmail.com", "password100");
