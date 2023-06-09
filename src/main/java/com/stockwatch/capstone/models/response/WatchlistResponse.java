@@ -11,21 +11,6 @@ public class WatchlistResponse {
         this.listId = listId;
     }
 
-    public String getListName() {
-        return listName;
-    }
-
-    public void setListName(String listName) {
-        this.listName = listName;
-    }
-
-    public Long getListId() {
-        return listId;
-    }
-
-    public void setListId(Long listId) {
-        this.listId = listId;
-    }
 
     @Override
     public String toString() {

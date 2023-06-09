@@ -22,16 +22,8 @@ public class StockWatchlistRequest {
         return watchListId;
     }
 
-    public void setWatchListId(Long watchListId) {
-        this.watchListId = watchListId;
-    }
-
     public List<String> getStockSymbols() {
         return stockSymbols;
-    }
-
-    public void setStockSymbols(List<String> stockSymbols) {
-        this.stockSymbols = stockSymbols;
     }
 
     @Override

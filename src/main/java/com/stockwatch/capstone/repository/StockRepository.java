@@ -11,8 +11,6 @@ import java.util.List;
 public interface StockRepository extends JpaRepository<Stock, Long> {
 
 
-    Stock findStockByCompanyOrSymbol(String company, String symbol);
-
     Stock findBySymbolIgnoreCase(String symbol);
 
     List<Stock> findByCompanyEqualsIgnoreCaseOrSymbolEqualsIgnoreCase(String companyQuery, String symbolQuery);
