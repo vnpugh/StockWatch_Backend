@@ -2,13 +2,13 @@
 <h1>Introduction</h1>
 As a beginner or novice investor, it’s important to make informed financial decisions. StockWatch is designed to simplify the complexities of the stock market.  Gain valuable insights, set personalized alerts, and track your favorite stocks with ease. With StockWatch, you can confidently make sound purchases when the time comes to invest in your first stock.
 <h1>Project Overview</h1>
-The Stockwatch API application is designed to provide backend functionality without the need for full CRUD operations and authentication. It utilizes Java RestAPI to handle the persistence of three models, allowing the API endpoints to perform CRUD tasks based on specific business use cases. In addition, the application includes a frontend built with Angular that communicates with the Spring Boot backend API, creating a comprehensive solution for managing stock-related data.
+The Stockwatch API application is designed to provide backend functionality without the need for full CRUD operations and authentication. It utilizes Java RestAPI to handle the persistence of three models, allowing the API endpoints to perform CRUD tasks based on specific business use cases. In addition, the application includes a frontend built with Angular that communicates with the Spring Boot backend API, creating a comprehensive solution for managing stock-related data. To check out the frontend UI and repository, <a href="https://github.com/vnpugh/StockWatch_Frontend">click here.</a>
 <h2>Running the Application</h2>
 To get started, first clone the repository. Next, open the application in your Java IDE. 
 <h1>The Planning Process</h1>
 Project Planning Link
 <h2>ERD Diagram</h2>
-<center><img align="center" width="300" height="300" src="assets/erd.png" alt="api"></center>
+<center><img align="center" width="500" height="400" src="assets/erd.png" alt="api"></center>
 <h2>Tools & Technologies Used</h2>
 <ul>
   <li> Project Management: Github Projects (Kanban Board)</li>
@@ -93,12 +93,6 @@ Project Planning Link
 
 </tbody>
 </table>
-<h1>Hurdles</h1>
-<p>◾One win was that I was able to troubleshoot most of the bean errors that I received while building the api. Another win
-was that I was able to research various exception handling procedures and status codes, and implement these exceptions
-in my code. I included them as separate exception classes under the exception package. Finally, working with the Postgre
-Database was a win for me because I was able to insert, update and query data from the tables.</p>
-<h1>Wins</h1>
 <h1>Resources & Documentation Used</h1>
 <ul>
 <li>Creating Forms and Styling in Angular: <a href="https://material.angular.io/">Angular Material</a></li>
@@ -109,4 +103,12 @@ Database was a win for me because I was able to insert, update and query data fr
 <li>MVN Repository: <a href="https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web/3.0.5">SpringBoot Starter Web</a></li>
 <li>JWT: <a href="https://jwt.io/introduction">JWT Debugger</a></li>
 </ul>
-<h1>Credits</h1>
+<h1>Credits / MVPS:star::star::star::star::star:</h1>
+<p>Thank you to all of the instructors and my classmates for your assistance!</p>
+<ul>
+<li><a href="https://github.com/sureshmelvinsigera/">Suresh Sigera</a></li>
+<li><a href="https://github.com/LRodriguez9">Leo Rodriguez</a></li>
+<li><a href="https://github.com/akshayankolekar">akshayankolekar: </a>Thank you for answering my questions and explaining how to make the project better!</li>
+<li><a href="https://github.com/maklaut007">Maksym Zinchenko</a></li>
+<li><a href="https://github.com/Jaypad07">Jay Padilla:</a> Cucumber Debugging Session</li>
+</ul>
