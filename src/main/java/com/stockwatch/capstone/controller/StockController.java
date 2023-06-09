@@ -33,9 +33,12 @@ public class StockController {
 
     /**
      * METHOD: GET endpoint: http://localhost:8080/api/stocks/companyOrSymbol?company=&symbol=
-     *
-     * @param query
-     * @return List of stocks filtered by either symbol or company.
+     * This endpoint searches for stocks based on the provided query, which can be either
+     * a company name or a stock symbol.
+     * @param query The search query, representing either a company name or stock symbol
+     * @param watchlistId (Optional) The ID of the watchlist to restrict the search within
+     * @return ResponseEntity containing a list of Stock objects matching the search query
+     * @see Stock
      */
     @GetMapping("/companyOrSymbol")
     public ResponseEntity<List<Stock>> searchStockByCompanyOrSymbol(@RequestParam String query, @RequestParam(required = false, name = "watchlist_id") Long watchlistId) {
@@ -43,10 +46,13 @@ public class StockController {
         return ResponseEntity.ok(searchResults);
     }
 
+
     /**
      * METHOD: GET http://localhost:8080/api/stocks
-     *
-     * @return List of stocks in the system.
+     * Retrieves all stocks.
+     * This endpoint returns a list of all stocks available in the system.
+     * @return ResponseEntity containing a list of Stock objects representing all stocks
+     * @see Stock
      */
     @GetMapping
     public ResponseEntity<List<Stock>> getAllStocks() {
